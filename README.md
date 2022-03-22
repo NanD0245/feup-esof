@@ -15,3 +15,7 @@ Therefore, our goal is for every FEUP student to have all the information they w
 - Study Material - The students are able to see the provided study material avalaible for each curricular unit on SIGARRA; 
 - Grades - The students are able to see the grades they attained on their past and present curricular units;
 - Teachers and Peers - The students are able to see who is lecturing their past and present curricular units and who is attending those lectures.
+
+## Assumptions and Dependencies
+
+Our product's only foreseeable external dependency is the SIGARRA API.
