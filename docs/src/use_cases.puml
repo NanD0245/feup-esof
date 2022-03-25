@@ -1,0 +1,28 @@
+@startuml
+    left to right direction
+
+    actor :Student:
+    actor :Authenticated\nStudent: as AuthStudent
+    Student <|- AuthStudent
+
+    package Authentication {
+        usecase (Login) as U1
+        usecase (Logout) as U2
+    }
+    
+    package Courses {
+        usecase (List my curricular units) as U3
+        usecase (Consult my grades) as U4
+        U4 .> U3 : <<extends>>
+        usecase (Read course information) as U5
+        usecase (Consult course study material) as U6
+        usecase (See course teachers and peers) as U7
+        U6 ..> U5 : <<extends>>
+        U7 ..> U5 : <<extends>>
+    }
+
+    Student --> U1
+    AuthStudent --> U2
+    AuthStudent -> U3
+    AuthStudent -> U5
+@enduml
