@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="feup.esof.student_companion">
+    package="feup.esof.sigarra_eye_candy">
    <application
-        android:label="student_companion"
+        android:label="sigarra_eye_candy"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -79,3 +79,22 @@ Our application use cases reflect the tasks the user needs to be able to accompl
 | _Postconditions_                   | - The Student sees the teachers and peers on the course of a course he's enrolled in.                                                                                                                                                                    |
 | _Normal flow_                      | 1. The Student selects a course from the courses he's enrolled in. <br> 2. The system gathers the teacher and peer data for the selected course. <br> 3. The system displays the information page of the selected course, with the gathered information. |
 | _Alternative flows and exceptions_ | 1. [The Student is not enrolled in any course]If, in step 1 of the normal flow of the system, the Authenticated Student is not enrolled in any course, an appropriate message will me displayed.                                                         |
+
+## Domain model
+
+The domain model presents an high-level view of the relevant abstractions to provide the user their courses, with respective classes, materials and grades.
+
+<p align="center" justify="center" >
+  <img src="images/domain_model.png"/>
+</p>
+
+| Class    | Description                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------- |
+| Person   | A person found in the Sigarra system, with the most relevant info of their profile page.     |
+| Student  | A person currently taking a course.                                                          |
+| Teacher  | A person currently lecturing a course.                                                       |
+| User     | The student who logs into the application, whose grades will be checked.                     |
+| Course   | A faculty curricular unit occurence, in a unique year and semester.                          |
+| Grade    | A student final course grade in an epoque.                                                   |
+| Class    | A set of students taking a course.                                                           |
+| Material | A document found in the Sigarra contents of the course, organized hierarchically via a path. |
