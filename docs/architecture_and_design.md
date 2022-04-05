@@ -8,20 +8,19 @@ Our project is divided into 3 main sections:
 - A Controller with the business logic related to translating the users requests into API calls, as well as interfacing with the SIGARRA API
 - And the SIGARRA API, as an external dependency, being the repository where the data is held.
 
-Also, if the data is to be served locally without a connection, as a future feature, a Model will be needed, consisting of a database to hold the data retrieved from SIGARRA.
-
 A slight variation of the MVC pattern will be followed, with the Model being possibly added in future features, since this pattern gives us good separation of concerns, as well as good decoupling between all sections of the system.
 
 ### Logical architecture
 
-The purpose of this subsection is to document the high-level logical structure of the code (Logical View), using a UML diagram with logical packages, without the worry of allocating to components, processes or machines.
+This subsection intends to highlight the high-level logical structure of the code, using the following UML package diagram.
 
-It can be beneficial to present the system both in a horizontal or vertical decomposition:
+The following components exist:
 
-- horizontal decomposition may define layers and implementation concepts, such as the user interface, business logic and concepts;
-- vertical decomposition can define a hierarchy of subsystems that cover all layers of implementation.
+- The Mobile UI encompasses what the user will see and interact with, in the mobile application.
+- The Business Logic will handle requests from the client and translate them into requests to the API, and perform any other necessary procedure.
+- Finally, in the External Services category lies the SIGARRA API, from where all the data will be fetched and requested.
 
-Example of _UML package diagram_ showing a _logical view_ of the Eletronic Ticketing System (to be accompanied by a short description of each package):
+![Logical Architecture of the System](./images/logical_architecture.png)
 
 ### Physical architecture
 
