@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
+import 'package:sigarra_eye_candy/view/theme.dart';
 import 'package:sigarra_eye_candy/view/pages/classes.dart';
 import 'package:sigarra_eye_candy/view/pages/courses.dart';
 import 'package:sigarra_eye_candy/view/pages/grades.dart';
@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Sigarra Eye Candy', home: HomePage());
+    return MaterialApp(
+        theme: appTheme, title: 'Sigarra Eye Candy', home: HomePage());
   }
 }
 
@@ -27,7 +28,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _pageIndex = 0;
-  final pages = [
+  final _pages = [
     const CoursesPage(),
     const MaterialsPage(),
     const GradesPage(),
@@ -37,9 +38,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[_pageIndex],
+      body: IndexedStack(
+        index: _pageIndex,
+        children: _pages,
+      ),
       appBar: AppBar(
-        title: Text('Sigarra Eye Candy'),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        actions: [
+          Container(
+              margin: EdgeInsets.only(right: 10),
+              child: Center(
+                  child: Text("Peter White",
+                      style: TextStyle(fontSize: 20, color: Colors.black))))
+        ],
+        title: Container(
+          decoration: BoxDecoration(
+              border: Border.all(width: 2),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          padding: EdgeInsets.all(3),
+          child: Icon(Icons.school, color: deepBlack),
+        ),
       ),
       extendBody: true,
       bottomNavigationBar: bottomNavigationBar(),
@@ -52,6 +70,9 @@ class _HomePageState extends State<HomePage> {
         child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             child: BottomNavigationBar(
+              backgroundColor: lightBlue,
+              selectedItemColor: brightYellow,
+              unselectedItemColor: deepBlack,
               onTap: (value) => {setState(() => _pageIndex = value)},
               iconSize: 30,
               type: BottomNavigationBarType.fixed,

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sigarra_eye_candy/view/widgets/expandable_card.dart';
 
 class CoursesPage extends StatelessWidget {
   const CoursesPage({Key key}) : super(key: key);
@@ -6,17 +8,20 @@ class CoursesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xffC4DFCB),
-      child: Center(
-        child: Text(
-          "CoursesPage",
-          style: TextStyle(
-            color: Colors.green[900],
-            fontSize: 45,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
+        padding: EdgeInsets.all(20),
+        child: Column(
+            children: [
+          ExpandableCard(
+              Text("Software Engineering"), [Text("A course at FEUP.")]),
+          ExpandableCard(
+              Text("Artificial Intelligence"), [Text("A course at FEUP.")]),
+          ExpandableCard(Text("Parallel and Distributed Computing"),
+              [Text("A course at FEUP.")]),
+          ExpandableCard(Text("Compilers"), [Text("A course at FEUP.")]),
+          ExpandableCard(Text("Capstone Project"), [Text("A course at FEUP.")])
+        ]
+                .map((e) =>
+                    Container(padding: EdgeInsets.only(bottom: 30), child: e))
+                .toList()));
   }
 }
