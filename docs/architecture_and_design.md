@@ -24,11 +24,15 @@ The following components exist:
 
 ### Physical architecture
 
-The goal of this subsection is to document the high-level physical structure of the software system (machines, connections, software components installed, and their dependencies) using UML deployment diagrams (Deployment View) or component diagrams (Implementation View), separate or integrated, showing the physical structure of the system.
+This subsection intends to document the high-level physical structure of the software system.
 
-It should describe also the technologies considered and justify the selections made. Examples of technologies relevant for uni4all are, for example, frameworks for mobile applications (such as Flutter).
+The components described are as follows:
 
-Example of _UML deployment diagram_ showing a _deployment view_ of the Eletronic Ticketing System (please notice that, instead of software components, one should represent their physical/executable manifestations for deployment, called artifacts in UML; the diagram should be accompanied by a short description of each node and artifact):
+- The Sigarra Eye Candy Application represents the majority of the features of our application the user will interact with. This application will be developed using the Flutter framework.
+- The business logic will handle the Application requests performed by its user, and make requests to the Sigarra API.
+- The Sigarra API is responsible for receiving our requests and managing them appropriately.
+
+![Physical Architecture of the System](./images/physical_architecture.png)
 
 ### Vertical prototype
 
