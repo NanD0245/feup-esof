@@ -36,8 +36,7 @@ The components described are as follows:
 
 ### Vertical prototype
 
-To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system.
+For our vertical prototype, we have implemented the following:
 
-In this subsection please describe which feature you have implemented, and how, together with a snapshot of the user interface, if applicable.
-
-At this phase, instead of a complete user story, you can simply implement a feature that demonstrates thay you can use the technology, for example, show a screen with the app credits (name and authors).
+- Basic home page
+- Card list
