@@ -21,8 +21,8 @@
         U7 ..> U5 : <<extends>>
     }
 
-    Student --> U1
-    AuthStudent --> U2
-    AuthStudent -> U3
-    AuthStudent -> U5
+    Student -- U1
+    AuthStudent -- U2
+    AuthStudent - U3
+    AuthStudent - U5
 @enduml
