@@ -5,11 +5,6 @@
     actor :Authenticated\nStudent: as AuthStudent
     Student <|- AuthStudent
 
-    package Authentication {
-        usecase (Login) as U1
-        usecase (Logout) as U2
-    }
-    
     package Courses {
         usecase (List my curricular units) as U3
         usecase (Consult my grades) as U4
@@ -21,8 +16,6 @@
         U7 ..> U5 : <<extends>>
     }
 
-    Student -- U1
-    AuthStudent -- U2
     AuthStudent -- U3
     U3 <|-- U5
 @enduml
