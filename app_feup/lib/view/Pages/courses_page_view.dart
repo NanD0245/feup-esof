@@ -10,17 +10,17 @@ class CoursesPageView extends StatefulWidget {
 }
 
 class CoursesPageViewState extends GeneralPageViewState {
-  var _expanded = List.filled(5, false);
+  final _expanded = List.filled(5, false);
   final _courses = [
     CourseDescription(
-        "Software Engineering", "Learn software lifecycle and management."),
-    CourseDescription("Artificial Intelligence",
-        "Solve problems with optimization and machine learning."),
-    CourseDescription("Parallel and Distributed Computing",
-        "Build parallel and distributed systems."),
+        'Software Engineering', 'Learn software lifecycle and management.'),
+    CourseDescription('Artificial Intelligence',
+        'Solve problems with optimization and machine learning.'),
+    CourseDescription('Parallel and Distributed Computing',
+        'Build parallel and distributed systems.'),
     CourseDescription(
-        "Compilers", "An holistic class on compiler assembling and analysis."),
-    CourseDescription("Capstone Project", "An aggregation project.")
+        'Compilers', 'An holistic class on compiler assembling and analysis.'),
+    CourseDescription('Capstone Project', 'An aggregation project.')
   ];
 
   @override
