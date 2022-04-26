@@ -23,6 +23,6 @@
 
     Student -- U1
     AuthStudent -- U2
-    AuthStudent - U3
-    AuthStudent - U5
+    AuthStudent -- U3
+    U3 <|-- U5
 @enduml
