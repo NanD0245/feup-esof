@@ -2,15 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uni/model/entities/course_description.dart';
 
-import 'general_page_view.dart';
-
-class CoursesPageView extends StatefulWidget {
+class CoursesSheets extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => CoursesPageViewState();
+  State<StatefulWidget> createState() => _CoursesSheetsState();
 }
 
-class CoursesPageViewState extends GeneralPageViewState {
+class _CoursesSheetsState extends State<StatefulWidget> {
   final _expanded = List.filled(5, false);
+
   final _courses = [
     CourseDescription(
         'Software Engineering', 'Learn software lifecycle and management.'),
@@ -24,10 +23,10 @@ class CoursesPageViewState extends GeneralPageViewState {
   ];
 
   @override
-  Widget getBody(BuildContext context) {
+  Widget build(BuildContext context) {
     return ListView(children: [
       ExpansionPanelList(
-          animationDuration: Duration(milliseconds: 100),
+          animationDuration: Duration(milliseconds: 250),
           expansionCallback: (index, isExpanded) {
             setState(() {
               _expanded[index] = !_expanded[index];
