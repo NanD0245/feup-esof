@@ -43,7 +43,7 @@ class CourseCard extends CourseGenericCard {
     return Column(children: [
       sectionTitle('Docência (Teóricas)'),
       Table(
-          columnWidths: {1: FractionColumnWidth(.4)},
+          columnWidths: {1: FractionColumnWidth(.2)},
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: getTeachersTable(courseSheet.getTeachers(true))),
       Container(
@@ -51,7 +51,7 @@ class CourseCard extends CourseGenericCard {
       ),
       sectionTitle('Docência (Práticas)'),
       Table(
-          columnWidths: {1: FractionColumnWidth(.4)},
+          columnWidths: {1: FractionColumnWidth(.2)},
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: getTeachersTable(courseSheet.getTeachers(false)))
     ]);
@@ -131,7 +131,7 @@ class CourseCard extends CourseGenericCard {
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
       ),
       Table(
-          columnWidths: {1: FractionColumnWidth(.4)},
+          columnWidths: {1: FractionColumnWidth(.3)},
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: getEvaluationTable()),
       Container(
@@ -157,8 +157,7 @@ class CourseCard extends CourseGenericCard {
           margin: const EdgeInsets.only(top: 5.0, bottom: 8.0, right: 5.0),
           child: Align(
               alignment: Alignment.centerRight,
-              child:
-                  Text(component.weight + '%', style: TextStyle(fontSize: 14))),
+              child: Text(component.weight, style: TextStyle(fontSize: 14))),
         )
       ]));
     }
