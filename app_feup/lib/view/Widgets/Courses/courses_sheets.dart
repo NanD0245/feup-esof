@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uni/model/entities/course_sheets.dart';
 
@@ -24,19 +23,28 @@ class _CoursesSheetsState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> courseCards = [];
+    final List<Widget> courseCards = [];
     _courses.forEach((courseSheet) {
       courseCards
-          .add(CourseCard(courseSheet.title, Text(courseSheet.description)));
+          .add(CourseCard(courseSheet.title, courseInfoWidget(courseSheet)));
     });
     return ListView(
         children: [
       Container(
-          padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
+          padding: EdgeInsets.fromLTRB(30, 20, 0, 0),
           child: Text(
             'Semestre atual',
             textScaleFactor: 0.8,
           ))
     ]..addAll(courseCards));
+  }
+
+  Widget courseInfoWidget(CourseSheet courseSheet) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: Text(courseSheet.description)),
+    );
   }
 }

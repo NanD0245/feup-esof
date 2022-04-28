@@ -20,7 +20,7 @@ abstract class CourseGenericCard extends StatefulWidget {
 
 class CourseGenericCardState extends State<CourseGenericCard> {
   final double borderRadius = 10.0;
-  final double padding = 12.0;
+  final double padding = 3.0;
 
   @override
   Widget build(BuildContext context) {

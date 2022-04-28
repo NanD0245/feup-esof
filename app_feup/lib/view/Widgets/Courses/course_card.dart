@@ -5,22 +5,20 @@ class CourseCard extends CourseGenericCard {
   final double padding = 12.0;
   final String courseName;
   final Widget extension;
-  final ExpansionTile expansionTile;
 
-  CourseCard(this.courseName, this.extension, {double padding = 12.0})
-      : expansionTile = ExpansionTile(
-            title: Text(courseName),
-            children: [extension],
-            childrenPadding: EdgeInsets.only(bottom: padding));
+  CourseCard(this.courseName, this.extension);
 
   @override
   Widget buildCardContent(BuildContext context) {
     return Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: expansionTile);
-  }
-
-  String getTitle() {
-    return courseName;
+        child: ExpansionTile(
+            title: Text(
+              courseName,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            ),
+            children: [extension],
+            childrenPadding: EdgeInsets.only(bottom: padding)));
   }
 }
