@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni/model/entities/course_evaluation_component.dart';
 import 'package:uni/model/entities/course_sheets.dart';
 import 'package:uni/model/entities/course_teacher.dart';
 
@@ -11,6 +12,7 @@ class CoursesSheets extends StatefulWidget {
 
 class _CoursesSheetsState extends State<StatefulWidget> {
   List<CourseTeacher> _esofTeachers;
+  List<CourseEvaluationComponent> _esofComponents;
   List<CourseSheet> _courses;
   _CoursesSheetsState() {
     this._esofTeachers = [
@@ -26,16 +28,25 @@ class _CoursesSheetsState extends State<StatefulWidget> {
       CourseTeacher('Ademar Manuel Teixeira de Aguiar', false, '4'),
       CourseTeacher('Filipe Alexandre Pais de Figueiredo Correia', false, '4'),
     ];
+    this._esofComponents = [
+      CourseEvaluationComponent('Trabalho escrito', '25,00'),
+      CourseEvaluationComponent('Trabalho prático ou de projeto	', '30,00'),
+      CourseEvaluationComponent('Exame', '35,00'),
+      CourseEvaluationComponent('Participação presencial', '10,00'),
+    ];
     this._courses = [
-      CourseSheet('Software Engineering',
-          'Learn software lifecycle and management.', this._esofTeachers),
+      CourseSheet(
+          'Software Engineering',
+          'Familiarizar-se com os métodos de engenharia e gestão necessários ao desenvolvimento de sistemas de software complexos e/ou em larga escala, de forma economicamente eficaz e com elevada qualidade.',
+          this._esofComponents,
+          this._esofTeachers),
       CourseSheet('Artificial Intelligence',
-          'Solve problems with optimization and machine learning.', []),
+          'Solve problems with optimization and machine learning.', [], []),
       CourseSheet('Parallel and Distributed Computing',
-          'Build parallel and distributed systems.', []),
+          'Build parallel and distributed systems.', [], []),
       CourseSheet('Compilers',
-          'An holistic class on compiler assembling and analysis.', []),
-      CourseSheet('Capstone Project', 'An aggregation project.', [])
+          'An holistic class on compiler assembling and analysis.', [], []),
+      CourseSheet('Capstone Project', 'An aggregation project.', [], [])
     ];
   }
 

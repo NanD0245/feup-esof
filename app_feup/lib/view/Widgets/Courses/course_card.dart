@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni/model/entities/course_evaluation_component.dart';
 import 'package:uni/model/entities/course_sheets.dart';
 import 'package:uni/model/entities/course_teacher.dart';
 import 'package:uni/view/Widgets/Courses/course_generic_card.dart';
@@ -17,7 +18,7 @@ class CourseCard extends CourseGenericCard {
             title: Text(
               this.courseSheet.courseName,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
             ),
             children: [courseSheetWidget()],
             childrenPadding: EdgeInsets.only(bottom: padding)));
@@ -62,12 +63,17 @@ class CourseCard extends CourseGenericCard {
       teachersTableLines.add(TableRow(children: [
         Container(
           margin: const EdgeInsets.only(top: 5.0, bottom: 8.0, left: 5.0),
-          child: Text(teacher.name, overflow: TextOverflow.ellipsis),
+          child: Text(
+            teacher.name,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 14),
+          ),
         ),
         Container(
           margin: const EdgeInsets.only(top: 5.0, bottom: 8.0, right: 5.0),
           child: Align(
-              alignment: Alignment.centerRight, child: Text(teacher.hours)),
+              alignment: Alignment.centerRight,
+              child: Text(teacher.hours, style: TextStyle(fontSize: 14))),
         )
       ]));
     }
@@ -75,12 +81,19 @@ class CourseCard extends CourseGenericCard {
           TableRow(children: [
             Container(
               margin: const EdgeInsets.only(top: 10.0, bottom: 8.0, left: 5.0),
-              child: Text('Docente'),
+              child: Text(
+                'Docente',
+                style: TextStyle(fontSize: 14),
+              ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 10.0, bottom: 8.0, right: 5.0),
-              child:
-                  Align(alignment: Alignment.centerRight, child: Text('Horas')),
+              child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'Horas',
+                    style: TextStyle(fontSize: 14),
+                  )),
             )
           ])
         ] +
@@ -91,6 +104,12 @@ class CourseCard extends CourseGenericCard {
     return Column(children: [
       sectionTitle('Objetivos'),
       Container(
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              courseSheet.goals,
+              style: TextStyle(fontWeight: FontWeight.w400),
+            )),
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
       )
     ]);
@@ -101,7 +120,7 @@ class CourseCard extends CourseGenericCard {
       sectionTitle('Programa'),
       Container(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      )
+      ),
     ]);
   }
 
@@ -110,8 +129,60 @@ class CourseCard extends CourseGenericCard {
       sectionTitle('Avaliação'),
       Container(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      )
+      ),
+      Table(
+          columnWidths: {1: FractionColumnWidth(.4)},
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: getEvaluationTable()),
+      Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      ),
     ]);
+  }
+
+  List<TableRow> getEvaluationTable() {
+    final List<TableRow> evaluationTableLines = [];
+    for (CourseEvaluationComponent component
+        in courseSheet.evaluationComponents) {
+      evaluationTableLines.add(TableRow(children: [
+        Container(
+          margin: const EdgeInsets.only(top: 5.0, bottom: 8.0, left: 5.0),
+          child: Text(
+            component.designation,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 14),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 5.0, bottom: 8.0, right: 5.0),
+          child: Align(
+              alignment: Alignment.centerRight,
+              child:
+                  Text(component.weight + '%', style: TextStyle(fontSize: 14))),
+        )
+      ]));
+    }
+    return [
+          TableRow(children: [
+            Container(
+              margin: const EdgeInsets.only(top: 10.0, bottom: 8.0, left: 5.0),
+              child: Text(
+                'Designação',
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10.0, bottom: 8.0, right: 5.0),
+              child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'Peso (%)',
+                    style: TextStyle(fontSize: 14),
+                  )),
+            )
+          ])
+        ] +
+        evaluationTableLines;
   }
 
   Widget sectionTitle(String title) {
@@ -124,7 +195,7 @@ class CourseCard extends CourseGenericCard {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: Color.fromRGBO(50, 50, 50, 100),
-                fontSize: 15,
+                fontSize: 16,
                 fontWeight: FontWeight.w500),
           ),
         ));
