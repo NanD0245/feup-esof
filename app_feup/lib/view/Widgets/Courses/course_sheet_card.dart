@@ -47,7 +47,7 @@ class CourseSheetCard extends CourseGenericCard {
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: getTeachersTable(courseSheet.getTeachers(true))),
       Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+        padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
       ),
       sectionTitle('Docência (Teórico-Práticas)'),
       Table(
@@ -80,14 +80,14 @@ class CourseSheetCard extends CourseGenericCard {
     return [
           TableRow(children: [
             Container(
-              margin: const EdgeInsets.only(top: 10.0, bottom: 8.0, left: 5.0),
+              margin: const EdgeInsets.only(top: 16.0, bottom: 8.0, left: 5.0),
               child: Text(
                 'Docente',
                 style: TextStyle(fontSize: 14),
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 10.0, bottom: 8.0, right: 5.0),
+              margin: const EdgeInsets.only(top: 16.0, bottom: 8.0, right: 5.0),
               child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
@@ -101,50 +101,49 @@ class CourseSheetCard extends CourseGenericCard {
   }
 
   Widget courseObjectiveWidget() {
-    return Column(children: [
-      sectionTitle('Objetivos'),
-      Container(
-        child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              courseSheet.goals,
-              style: TextStyle(fontWeight: FontWeight.w400),
-            )),
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      ),
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      ),
-    ]);
+    return ExpansionTile(
+        title: sectionTitle('Objetivos'),
+        tilePadding: EdgeInsets.only(right: 20),
+        children: [
+          Container(
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  courseSheet.goals,
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                )),
+          ),
+        ]);
   }
 
   Widget courseProgramWidget() {
-    return Column(children: [
-      sectionTitle('Programa'),
-      Container(
-        child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              courseSheet.program,
-              style: TextStyle(fontWeight: FontWeight.w400),
-            )),
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      ),
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      ),
-    ]);
+    return ExpansionTile(
+        title: sectionTitle('Programa'),
+        tilePadding: EdgeInsets.only(right: 20),
+        children: [
+          Container(
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  courseSheet.program,
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                )),
+          ),
+        ]);
   }
 
   Widget courseEvaluationWidget() {
     return Column(children: [
+      Container(
+        padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+      ),
       sectionTitle('Avaliação'),
       Table(
           columnWidths: {1: FractionColumnWidth(.3)},
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: getEvaluationTable()),
       Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+        padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
       ),
     ]);
   }
@@ -173,14 +172,14 @@ class CourseSheetCard extends CourseGenericCard {
     return [
           TableRow(children: [
             Container(
-              margin: const EdgeInsets.only(top: 10.0, bottom: 8.0, left: 5.0),
+              margin: const EdgeInsets.only(top: 16.0, bottom: 8.0, left: 5.0),
               child: Text(
                 'Designação',
                 style: TextStyle(fontSize: 14),
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 10.0, bottom: 8.0, right: 5.0),
+              margin: const EdgeInsets.only(top: 16.0, bottom: 8.0, right: 5.0),
               child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
