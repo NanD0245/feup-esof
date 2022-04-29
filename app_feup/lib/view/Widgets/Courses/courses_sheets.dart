@@ -3,7 +3,7 @@ import 'package:uni/model/entities/course_evaluation_component.dart';
 import 'package:uni/model/entities/course_sheets.dart';
 import 'package:uni/model/entities/course_teacher.dart';
 
-import 'course_card.dart';
+import 'course_sheet_card.dart';
 
 class CoursesSheets extends StatefulWidget {
   @override
@@ -38,15 +38,16 @@ class _CoursesSheetsState extends State<StatefulWidget> {
       CourseSheet(
           'Software Engineering',
           'Familiarizar-se com os métodos de engenharia e gestão necessários ao desenvolvimento de sistemas de software complexos e/ou em larga escala, de forma economicamente eficaz e com elevada qualidade.',
+          '''INTRODUÇÃO: desafios do desenvolvimento de software em larga escala; objetivos e âmbito da engenharia de software; história da engenharia de software.\nPROCESSO DE SOFTWARE: noção de processo de software; atividades do processo; modelos de processos; exemplos de processos (RUP, XP, Scrum, etc.).\nGESTÃO DE PROJETOS DE SOFTWARE: planeamento, monitorização e controlo de projeto; estimação de software; gestão ágil e gestão clássica de projetos.\nREQUISITOS DE SOFTWARE: conceito de requisito de software; tipos de requisitos; identificação, análise, especificação e validação de requisitos; modelação de requisitos com UML; prototipagem de interfaces.\nDESENHO DE SOFTWARE: desenho de arquitetura; modelação de arquitetura com UML; reutilização de software; desenho detalhado.\nCONSTRUÇÃO E EVOLUÇÂO DE SOFTWARE: ambientes de desenvolvimento; integração contínua; gestão de versões e alterações; desenvolvimento ágil com XP; evolução e manutenção de software.\nVERIFICAÇÃO E VALIDAÇÃO DE SOFTWARE: conceitos básicos; testes unitários, de integração, de sistema e de aceitação; revisões e inspeções de software; registo de defeitos; análise estática de código.''',
           this._esofComponents,
           this._esofTeachers),
       CourseSheet('Artificial Intelligence',
-          'Solve problems with optimization and machine learning.', [], []),
+          'Solve problems with optimization and machine learning.', '', [], []),
       CourseSheet('Parallel and Distributed Computing',
-          'Build parallel and distributed systems.', [], []),
+          'Build parallel and distributed systems.', '', [], []),
       CourseSheet('Compilers',
-          'An holistic class on compiler assembling and analysis.', [], []),
-      CourseSheet('Capstone Project', 'An aggregation project.', [], [])
+          'An holistic class on compiler assembling and analysis.', '', [], []),
+      CourseSheet('Capstone Project', 'An aggregation project.', '', [], [])
     ];
   }
 
@@ -54,7 +55,7 @@ class _CoursesSheetsState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     final List<Widget> courseCards = [];
     _courses.forEach((courseSheet) {
-      courseCards.add(CourseCard(courseSheet));
+      courseCards.add(CourseSheetCard(courseSheet));
     });
     return ListView(
         children: [

@@ -4,11 +4,11 @@ import 'package:uni/model/entities/course_sheets.dart';
 import 'package:uni/model/entities/course_teacher.dart';
 import 'package:uni/view/Widgets/Courses/course_generic_card.dart';
 
-class CourseCard extends CourseGenericCard {
+class CourseSheetCard extends CourseGenericCard {
   final double padding = 12.0;
   final CourseSheet courseSheet;
 
-  CourseCard(this.courseSheet);
+  CourseSheetCard(this.courseSheet);
 
   @override
   Widget buildCardContent(BuildContext context) {
@@ -53,7 +53,10 @@ class CourseCard extends CourseGenericCard {
       Table(
           columnWidths: {1: FractionColumnWidth(.2)},
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: getTeachersTable(courseSheet.getTeachers(false)))
+          children: getTeachersTable(courseSheet.getTeachers(false))),
+      Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      ),
     ]);
   }
 
@@ -111,13 +114,25 @@ class CourseCard extends CourseGenericCard {
               style: TextStyle(fontWeight: FontWeight.w400),
             )),
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      )
+      ),
+      Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      ),
     ]);
   }
 
   Widget courseProgramWidget() {
     return Column(children: [
       sectionTitle('Programa'),
+      Container(
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              courseSheet.program,
+              style: TextStyle(fontWeight: FontWeight.w400),
+            )),
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      ),
       Container(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
       ),
@@ -127,9 +142,6 @@ class CourseCard extends CourseGenericCard {
   Widget courseEvaluationWidget() {
     return Column(children: [
       sectionTitle('Avaliação'),
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      ),
       Table(
           columnWidths: {1: FractionColumnWidth(.3)},
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
