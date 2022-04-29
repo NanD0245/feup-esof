@@ -6,11 +6,12 @@ class CourseSheet {
   String courseName;
   String goals;
   String program;
+  bool active;
   List<CourseTeacher> teachers;
   List<CourseEvaluationComponent> evaluationComponents;
 
   CourseSheet(this.courseName, this.goals, this.program,
-      this.evaluationComponents, this.teachers);
+      this.evaluationComponents, this.teachers, this.active);
 
   List<CourseTeacher> getTeachers(bool theorical) {
     final List<CourseTeacher> t = [];

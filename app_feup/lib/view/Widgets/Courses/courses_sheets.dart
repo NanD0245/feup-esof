@@ -40,31 +40,58 @@ class _CoursesSheetsState extends State<StatefulWidget> {
           'Familiarizar-se com os métodos de engenharia e gestão necessários ao desenvolvimento de sistemas de software complexos e/ou em larga escala, de forma economicamente eficaz e com elevada qualidade.',
           '''INTRODUÇÃO: desafios do desenvolvimento de software em larga escala; objetivos e âmbito da engenharia de software; história da engenharia de software.\nPROCESSO DE SOFTWARE: noção de processo de software; atividades do processo; modelos de processos; exemplos de processos (RUP, XP, Scrum, etc.).\nGESTÃO DE PROJETOS DE SOFTWARE: planeamento, monitorização e controlo de projeto; estimação de software; gestão ágil e gestão clássica de projetos.\nREQUISITOS DE SOFTWARE: conceito de requisito de software; tipos de requisitos; identificação, análise, especificação e validação de requisitos; modelação de requisitos com UML; prototipagem de interfaces.\nDESENHO DE SOFTWARE: desenho de arquitetura; modelação de arquitetura com UML; reutilização de software; desenho detalhado.\nCONSTRUÇÃO E EVOLUÇÂO DE SOFTWARE: ambientes de desenvolvimento; integração contínua; gestão de versões e alterações; desenvolvimento ágil com XP; evolução e manutenção de software.\nVERIFICAÇÃO E VALIDAÇÃO DE SOFTWARE: conceitos básicos; testes unitários, de integração, de sistema e de aceitação; revisões e inspeções de software; registo de defeitos; análise estática de código.''',
           this._esofComponents,
-          this._esofTeachers),
-      CourseSheet('Artificial Intelligence',
-          'Solve problems with optimization and machine learning.', '', [], []),
+          this._esofTeachers,
+          true),
+      CourseSheet(
+          'Artificial Intelligence',
+          'Solve problems with optimization and machine learning.',
+          '',
+          [],
+          [],
+          true),
       CourseSheet('Parallel and Distributed Computing',
-          'Build parallel and distributed systems.', '', [], []),
-      CourseSheet('Compilers',
-          'An holistic class on compiler assembling and analysis.', '', [], []),
-      CourseSheet('Capstone Project', 'An aggregation project.', '', [], [])
+          'Build parallel and distributed systems.', '', [], [], false),
+      CourseSheet(
+          'Compilers',
+          'An holistic class on compiler assembling and analysis.',
+          '',
+          [],
+          [],
+          true),
+      CourseSheet(
+          'Capstone Project', 'An aggregation project.', '', [], [], false)
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> courseCards = [];
+    final List<Widget> activeCourseCards = [];
+    final List<Widget> pastCourseCards = [];
     _courses.forEach((courseSheet) {
-      courseCards.add(CourseSheetCard(courseSheet));
+      if (courseSheet.active) {
+        activeCourseCards.add(CourseSheetCard(courseSheet));
+      } else {
+        pastCourseCards.add(CourseSheetCard(courseSheet));
+      }
     });
     return ListView(
         children: [
       Container(
-          padding: EdgeInsets.fromLTRB(30, 20, 0, 0),
+          padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
           child: Text(
-            'Semestre atual',
+            'Semestre Atual',
             textScaleFactor: 0.8,
-          ))
-    ]..addAll(courseCards));
+          )),
+    ]
+          ..addAll(activeCourseCards)
+          ..addAll([
+            Container(
+                padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
+                child: Text(
+                  'Semestres Anteriores',
+                  textScaleFactor: 0.8,
+                )),
+          ])
+          ..addAll(pastCourseCards));
   }
 }

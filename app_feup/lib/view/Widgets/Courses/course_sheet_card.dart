@@ -49,14 +49,11 @@ class CourseSheetCard extends CourseGenericCard {
       Container(
         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
       ),
-      sectionTitle('Docência (Práticas)'),
+      sectionTitle('Docência (Teórico-Práticas)'),
       Table(
           columnWidths: {1: FractionColumnWidth(.2)},
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: getTeachersTable(courseSheet.getTeachers(false))),
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      ),
     ]);
   }
 
