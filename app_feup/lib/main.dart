@@ -3,18 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:sentry/sentry.dart';
 import 'package:redux/redux.dart';
+import 'package:sentry/sentry.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:uni/controller/middleware.dart';
 import 'package:uni/model/app_state.dart';
+import 'package:uni/model/courses_page_model.dart';
 import 'package:uni/redux/actions.dart';
 import 'package:uni/redux/reducers.dart';
 import 'package:uni/utils/constants.dart' as Constants;
 import 'package:uni/view/Pages/about_page_view.dart';
 import 'package:uni/view/Pages/bug_report_page_view.dart';
 import 'package:uni/view/Pages/bus_stop_next_arrivals_page.dart';
-import 'package:uni/view/Pages/courses_page_view.dart';
 import 'package:uni/view/Pages/exams_page_view.dart';
 import 'package:uni/view/Pages/home_page_view.dart';
 import 'package:uni/view/Pages/logout_route.dart';
@@ -89,7 +89,7 @@ class MyAppState extends State<MyApp> {
                     page: HomePageView(), settings: settings);
               case '/' + Constants.navCourseContents:
                 return PageTransition.makePageTransition(
-                    page: CoursesPageView(), settings: settings);
+                    page: CoursesPage(), settings: settings);
               case '/' + Constants.navSchedule:
                 return PageTransition.makePageTransition(
                     page: SchedulePage(), settings: settings);
