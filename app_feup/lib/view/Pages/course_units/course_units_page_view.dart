@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uni/view/Widgets/Courses/courses_sheets.dart';
+import 'package:uni/view/Widgets/course_units/course_units_sheets_view.dart';
 import 'package:uni/view/Widgets/page_title.dart';
 
-class CoursesPageView extends StatelessWidget {
+class CourseUnitsPageView extends StatelessWidget {
   final TabController tabController;
   final List<String> coursesTabs;
 
-  CoursesPageView(
+  CourseUnitsPageView(
       {Key key, @required this.tabController, @required this.coursesTabs});
 
   @override
@@ -49,7 +49,7 @@ class CoursesPageView extends StatelessWidget {
 
   List<Widget> createCourses(BuildContext context) {
     return [
-      CoursesSheets(),
+      CourseUnitsSheetsView(),
       Center(child: Text('Not implemented yet')),
       Center(child: Text('Not implemented yet')),
       Center(child: Text('Not implemented yet'))

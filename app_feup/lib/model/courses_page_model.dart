@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uni/view/Pages/Courses/courses_page_view.dart';
+import 'package:uni/view/Pages/course_units/course_units_page_view.dart';
 import 'package:uni/view/Pages/secondary_page_view.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -34,7 +34,7 @@ class CoursesPageState extends SecondaryPageViewState
 
   @override
   Widget getBody(BuildContext context) {
-    return CoursesPageView(
+    return CourseUnitsPageView(
         tabController: tabController, coursesTabs: coursesTabs);
   }
 }

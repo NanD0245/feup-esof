@@ -1,6 +1,7 @@
 import 'package:logger/logger.dart';
 import 'package:uni/model/app_state.dart';
 
+import '../model/app_state.dart';
 import 'actions.dart';
 
 AppState appReducers(AppState state, dynamic action) {
@@ -12,6 +13,10 @@ AppState appReducers(AppState state, dynamic action) {
     return setExams(state, action);
   } else if (action is SetExamsStatusAction) {
     return setExamsStatus(state, action);
+  } else if (action is SetCourseUnitSheetsAction) {
+    return setCourseUnitsSheets(state, action);
+  } else if (action is SetCourseUnitSheetsStatusAction) {
+    return setCourseUnitsSheetsStatus(state, action);
   } else if (action is SetScheduleStatusAction) {
     return setScheduleStatus(state, action);
   } else if (action is SetScheduleAction) {
@@ -62,7 +67,7 @@ AppState appReducers(AppState state, dynamic action) {
     return setExamFilter(state, action);
   } else if (action is SetUserFaculties) {
     return setUserFaculties(state, action);
-  } else if(action is SetRestaurantsAction){
+  } else if (action is SetRestaurantsAction) {
     return setRestaurantsAction(state, action);
   }
   return state;
@@ -81,6 +86,19 @@ AppState setLoginStatus(AppState state, SetLoginStatusAction action) {
 AppState setExams(AppState state, SetExamsAction action) {
   Logger().i('setting exams: ' + action.exams.length.toString());
   return state.cloneAndUpdateValue('exams', action.exams);
+}
+
+AppState setCourseUnitsSheets(
+    AppState state, SetCourseUnitSheetsAction action) {
+  Logger().i('setting course units sheets: ' +
+      action.courseUnitsSheets.map((e) => e.courseName).toList().toString());
+  return state.cloneAndUpdateValue('ucsSheets', action.courseUnitsSheets);
+}
+
+AppState setCourseUnitsSheetsStatus(
+    AppState state, SetCourseUnitSheetsStatusAction action) {
+  Logger().i('setting course units sheets status: ' + action.status.toString());
+  return state.cloneAndUpdateValue('ucsSheetsStatus', action.status);
 }
 
 AppState setRestaurantsAction(AppState state, SetRestaurantsAction action) {

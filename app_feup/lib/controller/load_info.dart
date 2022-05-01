@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:tuple/tuple.dart';
 import 'package:redux/redux.dart';
+import 'package:tuple/tuple.dart';
 import 'package:uni/controller/local_storage/image_offline_storage.dart';
 import 'package:uni/controller/parsers/parser_exams.dart';
 import 'package:uni/model/app_state.dart';
@@ -11,6 +12,7 @@ import 'package:uni/redux/action_creators.dart';
 import 'package:uni/redux/actions.dart';
 import 'package:uni/redux/refresh_items_action.dart';
 
+import '../redux/action_creators.dart';
 import 'local_storage/app_shared_preferences.dart';
 
 Future loadReloginInfo(Store<AppState> store) async {
@@ -56,7 +58,8 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
       coursesStates = Completer(),
       trips = Completer(),
       lastUpdate = Completer(),
-      restaurants = Completer();
+      restaurants = Completer(),
+      courseUnitsSheets = Completer();
 
   store.dispatch(getUserInfo(userInfo));
   store.dispatch(getUserPrintBalance(printBalance));
@@ -70,6 +73,7 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
   userInfo.future.then((value) {
     store.dispatch(getUserExams(exams, ParserExams(), userPersistentInfo));
     store.dispatch(getUserSchedule(schedule, userPersistentInfo));
+    store.dispatch(getCourseUnitsSheetsFromFetcher(courseUnitsSheets));
   });
 
   final allRequests = Future.wait([
@@ -80,7 +84,8 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
     coursesStates.future,
     userInfo.future,
     trips.future,
-    restaurants.future
+    restaurants.future,
+    courseUnitsSheets.future
   ]);
   allRequests.then((futures) {
     store.dispatch(setLastUserInfoUpdateTimestamp(lastUpdate));

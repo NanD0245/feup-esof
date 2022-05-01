@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:uni/model/entities/course_evaluation_component.dart';
-import 'package:uni/model/entities/course_sheets.dart';
-import 'package:uni/model/entities/course_teacher.dart';
-import 'package:uni/view/Widgets/Courses/course_generic_card.dart';
+import 'package:uni/model/entities/course_unit_evaluation_component.dart';
+import 'package:uni/model/entities/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_unit_teacher.dart';
+import 'package:uni/view/Widgets/course_units/course_unit_generic_card.dart';
 
-class CourseSheetCard extends CourseGenericCard {
+import 'course_unit_generic_card.dart';
+
+class CourseUnitSheetCard extends CourseUnitGenericCard {
   final double padding = 12.0;
-  final CourseSheet courseSheet;
+  final CourseUnitSheet courseSheet;
 
-  CourseSheetCard(this.courseSheet);
+  CourseUnitSheetCard(this.courseSheet);
 
   @override
   Widget buildCardContent(BuildContext context) {
@@ -57,9 +59,9 @@ class CourseSheetCard extends CourseGenericCard {
     ]);
   }
 
-  List<TableRow> getTeachersTable(List<CourseTeacher> teachers) {
+  List<TableRow> getTeachersTable(List<CourseUnitTeacher> teachers) {
     final List<TableRow> teachersTableLines = [];
-    for (CourseTeacher teacher in teachers) {
+    for (CourseUnitTeacher teacher in teachers) {
       teachersTableLines.add(TableRow(children: [
         Container(
           margin: const EdgeInsets.only(top: 5.0, bottom: 8.0, left: 5.0),
@@ -150,7 +152,7 @@ class CourseSheetCard extends CourseGenericCard {
 
   List<TableRow> getEvaluationTable() {
     final List<TableRow> evaluationTableLines = [];
-    for (CourseEvaluationComponent component
+    for (CourseUnitEvaluationComponent component
         in courseSheet.evaluationComponents) {
       evaluationTableLines.add(TableRow(children: [
         Container(
