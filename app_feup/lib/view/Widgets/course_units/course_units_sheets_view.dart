@@ -41,7 +41,7 @@ class _CourseUnitsSheetsViewState extends State<StatefulWidget> {
                 Container(
                     padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
                     child: Text(
-                      'Semestre Atual',
+                      'Por concluir',
                       textScaleFactor: 0.8,
                     )),
               ]
@@ -50,7 +50,7 @@ class _CourseUnitsSheetsViewState extends State<StatefulWidget> {
                       Container(
                           padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
                           child: Text(
-                            'Semestres Anteriores',
+                            'Concluídas',
                             textScaleFactor: 0.8,
                           )),
                     ])

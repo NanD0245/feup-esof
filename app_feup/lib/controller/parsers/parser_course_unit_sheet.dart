@@ -22,7 +22,7 @@ Future<CourseUnitSheet> parseCourseUnitSheet(
     final title = titles[i];
     switch (title.text) {
       case 'Docência - Horas':
-        teachers = [CourseUnitTeacher('JAS', true, '4')];
+        teachers = _parseTeachers(title);
         break;
       case 'Objetivos':
         goals = _parseGeneralDescription(title, titles);
@@ -64,4 +64,25 @@ List<CourseUnitEvaluationComponent> _parseEvaluationComponents(
         row.children[0].text, row.children[1].text));
   }
   return evaluationComponents;
+}
+
+List<CourseUnitTeacher> _parseTeachers(Element titleElement) {
+  final List<CourseUnitTeacher> teachers = [];
+  final table = titleElement.nextElementSibling.nextElementSibling;
+  final rows = table.querySelectorAll('td.t');
+  bool theoretical = true;
+  bool foundFirstSeparator = false;
+  for (var i = 0; i < rows.length; i += 2) {
+    if (rows[i].classes.contains('k')) {
+      if (foundFirstSeparator) {
+        theoretical = false;
+      }
+      foundFirstSeparator = true;
+      continue;
+    }
+    final String name = rows[i].text;
+    final String hours = rows[i].nextElementSibling.nextElementSibling.text;
+    teachers.add(CourseUnitTeacher(name, theoretical, hours));
+  }
+  return teachers;
 }
