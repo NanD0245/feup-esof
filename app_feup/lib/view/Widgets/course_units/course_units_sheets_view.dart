@@ -22,12 +22,10 @@ class _CourseUnitsSheetsViewState extends State<StatefulWidget> {
           final courseUnitsSheetsStatus = courseUnitsSheetsData.item2;
           return RequestDependentWidgetBuilder(
             context: context,
-            onNullContent: Center(
-                child:
-                    Text('Impossível obter fichas das unidades curriculares')),
+            onNullContent: Center(child: Text('A carregar...')),
             status: courseUnitsSheetsStatus,
             content: courseUnitsSheets,
-            contentChecker: courseUnitsSheets.isNotEmpty,
+            contentChecker: courseUnitsSheets?.isNotEmpty ?? false,
             contentGenerator: (dynamic courseUnitSheets, BuildContext context) {
               final List<Widget> activeCourseCards = [];
               final List<Widget> pastCourseCards = [];

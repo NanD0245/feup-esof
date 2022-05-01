@@ -1,23 +1,43 @@
-import 'dart:collection';
-
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:uni/model/entities/course_unit_evaluation_component.dart';
+import 'package:uni/model/entities/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_unit_teacher.dart';
 
-Future<Map<String, String>> parseAcademicPathWayCourseUnits(
-    http.Response response) async {
-  final document = parse(response.body);
+import '../../model/entities/course_unit.dart';
 
-  final Map<String, String> coursesStates = HashMap();
+Future<CourseUnitSheet> parseCourseUnitSheet(
+    CourseUnit courseUnit, http.Response sheetPageResponse) async {
+  final document = parse(sheetPageResponse.body);
 
-  final courses = document.querySelectorAll('#tabelapercurso > tr');
+  String goals;
+  String program;
+  List<CourseUnitTeacher> teachers = [];
+  List<CourseUnitEvaluationComponent> evaluationComponents;
 
-  for (int i = 0; i < courses.length; i++) {
-    final div = courses[i];
-    final course = div.querySelector('.estudante-lista-curso-nome > a').text;
-    final state = div.querySelectorAll('.formulario td')[3].text;
+  final titles = document.querySelectorAll('#conteudoinner h3');
 
-    coursesStates.putIfAbsent(course, () => state);
+  for (int i = 0; i < titles.length; i++) {
+    final title = titles[i];
+    final description = title.nextElementSibling.text;
+    switch (title.text) {
+      case 'Docência - Horas':
+        teachers = [CourseUnitTeacher('JAS', true, '4')];
+        break;
+      case 'Objetivos':
+        goals = description;
+        break;
+      case 'Programa':
+        program = description;
+        break;
+      case 'Componentes de Avaliação':
+        evaluationComponents = [CourseUnitEvaluationComponent('ola', '20')];
+        break;
+      default:
+        break;
+    }
   }
 
-  return coursesStates;
+  return CourseUnitSheet(courseUnit.name, goals, program, evaluationComponents,
+      teachers, courseUnit.status == 'V');
 }

@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:tuple/tuple.dart';
+import 'package:uni/controller/course_units_fetcher/course_units_fetcher.dart';
 import 'package:uni/controller/load_info.dart';
 import 'package:uni/controller/load_static/terms_and_conditions.dart';
 import 'package:uni/controller/local_storage/app_bus_stop_database.dart';
@@ -25,7 +26,6 @@ import 'package:uni/controller/restaurant_fetcher/restaurant_fetcher_html.dart';
 import 'package:uni/controller/schedule_fetcher/schedule_fetcher.dart';
 import 'package:uni/controller/schedule_fetcher/schedule_fetcher_api.dart';
 import 'package:uni/controller/schedule_fetcher/schedule_fetcher_html.dart';
-import 'package:uni/course_units_fetcher/course_units_fetcher.dart';
 import 'package:uni/model/app_state.dart';
 import 'package:uni/model/entities/course.dart';
 import 'package:uni/model/entities/course_unit.dart';
@@ -311,8 +311,9 @@ ThunkAction<AppState> getCourseUnitsSheetsFromFetcher(Completer<Null> action) {
   return (Store<AppState> store) async {
     try {
       store.dispatch(SetCourseUnitSheetsStatusAction(RequestStatus.busy));
-      final List<CourseUnitSheet> courseUnitsSheets = CourseUnitsFetcher()
-          .getCourseUnitsSheets(store.state.content['userUcs']);
+      final List<CourseUnitSheet> courseUnitsSheets = await CourseUnitsFetcher()
+          .getCourseUnitsSheets(
+              store.state.content['session'], store.state.content['currUcs']);
       // TO DO: Add to local db
       store.dispatch(SetCourseUnitSheetsAction(courseUnitsSheets));
       store.dispatch(SetCourseUnitSheetsStatusAction(RequestStatus.successful));
