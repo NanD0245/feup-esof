@@ -1,3 +1,4 @@
+import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:uni/model/entities/course_unit_evaluation_component.dart';
@@ -10,8 +11,8 @@ Future<CourseUnitSheet> parseCourseUnitSheet(
     CourseUnit courseUnit, http.Response sheetPageResponse) async {
   final document = parse(sheetPageResponse.body);
 
-  String goals;
-  String program;
+  String goals = '';
+  String program = '';
   List<CourseUnitTeacher> teachers = [];
   List<CourseUnitEvaluationComponent> evaluationComponents;
 
@@ -19,19 +20,18 @@ Future<CourseUnitSheet> parseCourseUnitSheet(
 
   for (int i = 0; i < titles.length; i++) {
     final title = titles[i];
-    final description = title.nextElementSibling.text;
     switch (title.text) {
       case 'Docência - Horas':
         teachers = [CourseUnitTeacher('JAS', true, '4')];
         break;
       case 'Objetivos':
-        goals = description;
+        goals = _parseGeneralDescription(title, titles);
         break;
       case 'Programa':
-        program = description;
+        program = _parseGeneralDescription(title, titles);
         break;
       case 'Componentes de Avaliação':
-        evaluationComponents = [CourseUnitEvaluationComponent('ola', '20')];
+        evaluationComponents = _parseEvaluationComponents(title);
         break;
       default:
         break;
@@ -39,5 +39,29 @@ Future<CourseUnitSheet> parseCourseUnitSheet(
   }
 
   return CourseUnitSheet(courseUnit.name, goals, program, evaluationComponents,
-      teachers, courseUnit.status == 'V');
+      teachers, courseUnit.result != 'A');
+}
+
+String _parseGeneralDescription(Element titleElement, List<Element> allTitles) {
+  String description = '';
+  var currElement = titleElement;
+  for (;;) {
+    currElement = currElement.nextElementSibling;
+    if (currElement == null || allTitles.contains(currElement)) {
+      break;
+    }
+    description += currElement.text + '\n\n';
+  }
+  return description;
+}
+
+List<CourseUnitEvaluationComponent> _parseEvaluationComponents(
+    Element titleElement) {
+  final List<CourseUnitEvaluationComponent> evaluationComponents = [];
+  final table = titleElement.nextElementSibling;
+  for (var row in table.querySelectorAll('tr.d')) {
+    evaluationComponents.add(CourseUnitEvaluationComponent(
+        row.children[0].text, row.children[1].text));
+  }
+  return evaluationComponents;
 }

@@ -10,7 +10,6 @@ class CourseUnitsFetcher {
   Future<List<CourseUnitSheet>> getCourseUnitsSheets(
       Session session, List<CourseUnit> userUcs) async {
     final List<CourseUnitSheet> courseUnitSheets = [];
-    print(userUcs);
     for (CourseUnit courseUnit in userUcs) {
       final String url = NetworkRouter.getBaseUrl(session.faculty) +
           'ucurr_geral.ficha_uc_view?pv_ocorrencia_id=${courseUnit.occurrId}';

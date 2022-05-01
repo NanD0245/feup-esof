@@ -19,7 +19,6 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
         child: ExpansionTile(
             title: Text(
               this.courseSheet.courseName,
-              overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
             ),
             children: [courseSheetWidget()],
