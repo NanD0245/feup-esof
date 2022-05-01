@@ -9,7 +9,6 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:uni/controller/middleware.dart';
 import 'package:uni/model/app_state.dart';
 import 'package:uni/model/courses_page_model.dart';
-import 'package:uni/redux/actions.dart';
 import 'package:uni/redux/reducers.dart';
 import 'package:uni/utils/constants.dart' as Constants;
 import 'package:uni/view/Pages/about_page_view.dart';
@@ -120,7 +119,5 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(seconds: 60),
-        (Timer t) => state.dispatch(SetCurrentTimeAction(DateTime.now())));
   }
 }
