@@ -447,7 +447,7 @@ ThunkAction<AppState> getUserCoursesState(Completer<Null> action) {
       store.dispatch(SetCoursesStatesAction(coursesStates));
       store.dispatch(SetCoursesStatesStatusAction(RequestStatus.successful));
     } catch (e) {
-      Logger().e('Failed to get course_units State info');
+      Logger().e('Failed to get Courses State info');
       store.dispatch(SetCoursesStatesStatusAction(RequestStatus.failed));
     }
 

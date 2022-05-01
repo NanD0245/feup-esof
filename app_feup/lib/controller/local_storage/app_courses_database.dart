@@ -5,7 +5,7 @@ import 'package:uni/model/entities/course.dart';
 
 import 'app_database.dart';
 
-/// Manages the app's course_units database.
+/// Manages the app's Courses database.
 ///
 /// This database stores information about the user's courses.
 /// See the [Course] class to see what data is stored in this database.
@@ -27,7 +27,7 @@ class AppCoursesDatabase extends AppDatabase {
     // Get a reference to the database
     final Database db = await this.getDatabase();
 
-    // Query the table for All The course_units.
+    // Query the table for All The Courses.
     final List<Map<String, dynamic>> maps = await db.query('courses');
 
     // Convert the List<Map<String, dynamic> into a List<Course>.
