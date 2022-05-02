@@ -25,10 +25,11 @@ Future<CourseUnitSheet> parseCourseUnitSheet(
         teachers = _parseTeachers(title);
         break;
       case 'Objetivos':
-        goals = _parseGeneralDescription(title, titles);
+        goals = _parseGeneralDescription(title, titles, sheetPageResponse.body);
         break;
       case 'Programa':
-        program = _parseGeneralDescription(title, titles);
+        program =
+            _parseGeneralDescription(title, titles, sheetPageResponse.body);
         break;
       case 'Componentes de Avaliação':
         evaluationComponents = _parseEvaluationComponents(title);
@@ -42,7 +43,8 @@ Future<CourseUnitSheet> parseCourseUnitSheet(
       teachers, courseUnit.result != 'A');
 }
 
-String _parseGeneralDescription(Element titleElement, List<Element> allTitles) {
+String _parseGeneralDescription(
+    Element titleElement, List<Element> allTitles, String body) {
   String description = '';
   var currElement = titleElement;
   for (;;) {
@@ -51,6 +53,11 @@ String _parseGeneralDescription(Element titleElement, List<Element> allTitles) {
       break;
     }
     description += currElement.text + '\n\n';
+  }
+  if (description == '') {
+    final int index =
+        body.indexOf(titleElement.outerHtml) + titleElement.outerHtml.length;
+    description = body.substring(index, body.indexOf('<', index));
   }
   return description;
 }
