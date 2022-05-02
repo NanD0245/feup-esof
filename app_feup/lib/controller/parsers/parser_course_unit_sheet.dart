@@ -25,11 +25,10 @@ Future<CourseUnitSheet> parseCourseUnitSheet(
         teachers = _parseTeachers(title);
         break;
       case 'Objetivos':
-        goals = _parseGeneralDescription(title, titles, sheetPageResponse.body);
+        goals = _parseGeneralDescription(title, sheetPageResponse.body);
         break;
       case 'Programa':
-        program =
-            _parseGeneralDescription(title, titles, sheetPageResponse.body);
+        program = _parseGeneralDescription(title, sheetPageResponse.body);
         break;
       case 'Componentes de Avaliação':
         evaluationComponents = _parseEvaluationComponents(title);
@@ -43,23 +42,16 @@ Future<CourseUnitSheet> parseCourseUnitSheet(
       teachers, courseUnit.result != 'A');
 }
 
-String _parseGeneralDescription(
-    Element titleElement, List<Element> allTitles, String body) {
-  String description = '';
-  var currElement = titleElement;
-  for (;;) {
-    currElement = currElement.nextElementSibling;
-    if (currElement == null || allTitles.contains(currElement)) {
-      break;
-    }
-    description += currElement.text + '\n\n';
-  }
-  if (description == '') {
-    final int index =
-        body.indexOf(titleElement.outerHtml) + titleElement.outerHtml.length;
-    description = body.substring(index, body.indexOf('<', index));
-  }
-  return description;
+String _parseGeneralDescription(Element titleElement, String body) {
+  final String htmlDescription =
+      _htmlAfterElement(body, titleElement.outerHtml);
+  final doc = parse(htmlDescription);
+  return parse(doc.body.text).documentElement.text;
+}
+
+String _htmlAfterElement(String body, String elementOuterHtml) {
+  final int index = body.indexOf(elementOuterHtml) + elementOuterHtml.length;
+  return body.substring(index, body.indexOf('<h3>', index));
 }
 
 List<CourseUnitEvaluationComponent> _parseEvaluationComponents(
