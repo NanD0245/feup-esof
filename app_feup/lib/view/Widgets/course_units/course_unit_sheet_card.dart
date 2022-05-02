@@ -41,21 +41,26 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
   }
 
   Widget courseTeachersWidget() {
-    return Column(children: [
-      sectionTitle('Docência (Teóricas)'),
-      Table(
-          columnWidths: {1: FractionColumnWidth(.2)},
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: getTeachersTable(courseSheet.getTeachers(true))),
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-      ),
-      sectionTitle('Docência (Teórico-Práticas)'),
-      Table(
-          columnWidths: {1: FractionColumnWidth(.2)},
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: getTeachersTable(courseSheet.getTeachers(false))),
-    ]);
+    return ExpansionTile(
+        title: sectionTitle('Docência'),
+        tilePadding: EdgeInsets.only(right: 20),
+        children: [
+          Column(children: [
+            sectionTitle('Teóricas'),
+            Table(
+                columnWidths: {1: FractionColumnWidth(.2)},
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: getTeachersTable(courseSheet.getTeachers(true))),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
+            ),
+            sectionTitle('Teórico-Práticas'),
+            Table(
+                columnWidths: {1: FractionColumnWidth(.2)},
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: getTeachersTable(courseSheet.getTeachers(false))),
+          ])
+        ]);
   }
 
   List<TableRow> getTeachersTable(List<CourseUnitTeacher> teachers) {
@@ -134,19 +139,17 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
   }
 
   Widget courseEvaluationWidget() {
-    return Column(children: [
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-      ),
-      sectionTitle('Avaliação'),
-      Table(
-          columnWidths: {1: FractionColumnWidth(.3)},
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: getEvaluationTable()),
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-      ),
-    ]);
+    return ExpansionTile(
+        title: sectionTitle('Avaliação'),
+        tilePadding: EdgeInsets.only(right: 20),
+        children: [
+          Column(children: [
+            Table(
+                columnWidths: {1: FractionColumnWidth(.3)},
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: getEvaluationTable()),
+          ])
+        ]);
   }
 
   List<TableRow> getEvaluationTable() {
