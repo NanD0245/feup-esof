@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-abstract class CourseGenericCard extends StatefulWidget {
-  CourseGenericCard({Key key})
+abstract class CourseUnitGenericCard extends StatefulWidget {
+  CourseUnitGenericCard({Key key})
       : editingMode = false,
         onDelete = null,
         super(key: key);
@@ -12,13 +12,13 @@ abstract class CourseGenericCard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return CourseGenericCardState();
+    return CourseUnitGenericCardState();
   }
 
   Widget buildCardContent(BuildContext context);
 }
 
-class CourseGenericCardState extends State<CourseGenericCard> {
+class CourseUnitGenericCardState extends State<CourseUnitGenericCard> {
   final double borderRadius = 10.0;
   final double padding = 3.0;
 

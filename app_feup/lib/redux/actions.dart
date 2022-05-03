@@ -1,5 +1,6 @@
 import 'package:uni/model/app_state.dart';
 import 'package:uni/model/entities/course_unit.dart';
+import 'package:uni/model/entities/course_unit_sheet.dart';
 import 'package:uni/model/entities/exam.dart';
 import 'package:uni/model/entities/lecture.dart';
 import 'package:uni/model/entities/profile.dart';
@@ -8,6 +9,7 @@ import 'package:uni/model/entities/session.dart';
 import 'package:uni/model/entities/trip.dart';
 import 'package:uni/model/home_page_model.dart';
 
+import '../model/app_state.dart';
 import '../model/entities/bus_stop.dart';
 
 class SaveLoginDataAction {
@@ -30,6 +32,16 @@ class SetExamsStatusAction {
   SetExamsStatusAction(this.status);
 }
 
+class SetCourseUnitSheetsAction {
+  List<CourseUnitSheet> courseUnitsSheets;
+  SetCourseUnitSheetsAction(this.courseUnitsSheets);
+}
+
+class SetCourseUnitSheetsStatusAction {
+  RequestStatus status;
+  SetCourseUnitSheetsStatusAction(this.status);
+}
+
 class SetRestaurantsAction {
   List<Restaurant> restaurants;
   SetRestaurantsAction(this.restaurants);
@@ -49,7 +61,6 @@ class SetScheduleStatusAction {
   RequestStatus status;
   SetScheduleStatusAction(this.status);
 }
-
 
 class SetInitialStoreStateAction {
   SetInitialStoreStateAction();

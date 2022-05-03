@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:uni/model/entities/course_evaluation_component.dart';
-import 'package:uni/model/entities/course_sheets.dart';
-import 'package:uni/model/entities/course_teacher.dart';
-import 'package:uni/view/Widgets/Courses/course_generic_card.dart';
+import 'package:uni/model/entities/course_unit_evaluation_component.dart';
+import 'package:uni/model/entities/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_unit_teacher.dart';
+import 'package:uni/view/Widgets/course_units/course_unit_generic_card.dart';
 
-class CourseSheetCard extends CourseGenericCard {
+import 'course_unit_generic_card.dart';
+
+class CourseUnitSheetCard extends CourseUnitGenericCard {
   final double padding = 12.0;
-  final CourseSheet courseSheet;
+  final CourseUnitSheet courseSheet;
 
-  CourseSheetCard(this.courseSheet);
+  CourseUnitSheetCard(this.courseSheet);
 
   @override
   Widget buildCardContent(BuildContext context) {
@@ -17,7 +19,6 @@ class CourseSheetCard extends CourseGenericCard {
         child: ExpansionTile(
             title: Text(
               this.courseSheet.courseName,
-              overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
             ),
             children: [courseSheetWidget()],
@@ -40,26 +41,31 @@ class CourseSheetCard extends CourseGenericCard {
   }
 
   Widget courseTeachersWidget() {
-    return Column(children: [
-      sectionTitle('Docência (Teóricas)'),
-      Table(
-          columnWidths: {1: FractionColumnWidth(.2)},
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: getTeachersTable(courseSheet.getTeachers(true))),
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-      ),
-      sectionTitle('Docência (Teórico-Práticas)'),
-      Table(
-          columnWidths: {1: FractionColumnWidth(.2)},
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: getTeachersTable(courseSheet.getTeachers(false))),
-    ]);
+    return ExpansionTile(
+        title: sectionTitle('Docência'),
+        tilePadding: EdgeInsets.only(right: 20),
+        children: [Column(children: getTeachers(courseSheet.getTeachers()))]);
   }
 
-  List<TableRow> getTeachersTable(List<CourseTeacher> teachers) {
+  List<Widget> getTeachers(Map<String, List<CourseUnitTeacher>> teachers) {
+    final List<Widget> widgets = [];
+    for (String type in teachers.keys) {
+      widgets.add(subSectionTitle(type));
+      widgets.add(Table(
+          columnWidths: {1: FractionColumnWidth(.2)},
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: getTeachersTable(teachers[type])));
+      widgets.add(Container(
+        padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      ));
+    }
+    widgets.removeLast();
+    return widgets;
+  }
+
+  List<TableRow> getTeachersTable(List<CourseUnitTeacher> teachers) {
     final List<TableRow> teachersTableLines = [];
-    for (CourseTeacher teacher in teachers) {
+    for (CourseUnitTeacher teacher in teachers) {
       teachersTableLines.add(TableRow(children: [
         Container(
           margin: const EdgeInsets.only(top: 5.0, bottom: 8.0, left: 5.0),
@@ -133,24 +139,22 @@ class CourseSheetCard extends CourseGenericCard {
   }
 
   Widget courseEvaluationWidget() {
-    return Column(children: [
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-      ),
-      sectionTitle('Avaliação'),
-      Table(
-          columnWidths: {1: FractionColumnWidth(.3)},
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: getEvaluationTable()),
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-      ),
-    ]);
+    return ExpansionTile(
+        title: sectionTitle('Avaliação'),
+        tilePadding: EdgeInsets.only(right: 20),
+        children: [
+          Column(children: [
+            Table(
+                columnWidths: {1: FractionColumnWidth(.3)},
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: getEvaluationTable()),
+          ])
+        ]);
   }
 
   List<TableRow> getEvaluationTable() {
     final List<TableRow> evaluationTableLines = [];
-    for (CourseEvaluationComponent component
+    for (CourseUnitEvaluationComponent component
         in courseSheet.evaluationComponents) {
       evaluationTableLines.add(TableRow(children: [
         Container(
@@ -194,7 +198,7 @@ class CourseSheetCard extends CourseGenericCard {
 
   Widget sectionTitle(String title) {
     return Container(
-        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
@@ -204,6 +208,22 @@ class CourseSheetCard extends CourseGenericCard {
                 color: Color.fromRGBO(50, 50, 50, 100),
                 fontSize: 16,
                 fontWeight: FontWeight.w500),
+          ),
+        ));
+  }
+
+  Widget subSectionTitle(String title) {
+    return Container(
+        padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: Color.fromRGBO(50, 50, 50, 100),
+                fontSize: 15,
+                fontWeight: FontWeight.w400),
           ),
         ));
   }
