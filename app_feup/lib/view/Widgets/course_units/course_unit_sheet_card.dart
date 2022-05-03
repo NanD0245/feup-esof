@@ -50,7 +50,7 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
   List<Widget> getTeachers(Map<String, List<CourseUnitTeacher>> teachers) {
     final List<Widget> widgets = [];
     for (String type in teachers.keys) {
-      widgets.add(sectionTitle(type));
+      widgets.add(subSectionTitle(type));
       widgets.add(Table(
           columnWidths: {1: FractionColumnWidth(.2)},
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -198,7 +198,7 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
 
   Widget sectionTitle(String title) {
     return Container(
-        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
@@ -208,6 +208,22 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
                 color: Color.fromRGBO(50, 50, 50, 100),
                 fontSize: 16,
                 fontWeight: FontWeight.w500),
+          ),
+        ));
+  }
+
+  Widget subSectionTitle(String title) {
+    return Container(
+        padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: Color.fromRGBO(50, 50, 50, 100),
+                fontSize: 15,
+                fontWeight: FontWeight.w400),
           ),
         ));
   }
