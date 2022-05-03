@@ -22,7 +22,8 @@ class _CourseUnitsSheetsViewState extends State<StatefulWidget> {
           final courseUnitsSheetsStatus = courseUnitsSheetsData.item2;
           return RequestDependentWidgetBuilder(
             context: context,
-            onNullContent: Center(child: Text('A carregar...')),
+            onNullContent:
+                Center(child: Text('Não existem cadeiras para apresentar')),
             status: courseUnitsSheetsStatus,
             content: courseUnitsSheets,
             contentChecker: courseUnitsSheets?.isNotEmpty ?? false,
