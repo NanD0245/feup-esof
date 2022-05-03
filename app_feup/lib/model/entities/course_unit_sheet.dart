@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:uni/model/entities/course_unit_evaluation_component.dart';
 import 'package:uni/model/entities/course_unit_teacher.dart';
 
@@ -13,11 +15,16 @@ class CourseUnitSheet {
   CourseUnitSheet(this.courseName, this.goals, this.program,
       this.evaluationComponents, this.teachers, this.active);
 
-  List<CourseUnitTeacher> getTeachers(bool theoretical) {
-    final List<CourseUnitTeacher> t = [];
+  SplayTreeMap<String, List<CourseUnitTeacher>> getTeachers() {
+    final SplayTreeMap<String, List<CourseUnitTeacher>> map =
+        SplayTreeMap<String, List<CourseUnitTeacher>>();
     for (CourseUnitTeacher teacher in teachers) {
-      if (teacher.lecturesTheoretical == theoretical) t.add(teacher);
+      if (map.containsKey(teacher.lecturesType)) {
+        map[teacher.lecturesType].add(teacher);
+      } else {
+        map[teacher.lecturesType] = [teacher];
+      }
     }
-    return t;
+    return map;
   }
 }

@@ -44,23 +44,23 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
     return ExpansionTile(
         title: sectionTitle('Docência'),
         tilePadding: EdgeInsets.only(right: 20),
-        children: [
-          Column(children: [
-            sectionTitle('Teóricas'),
-            Table(
-                columnWidths: {1: FractionColumnWidth(.2)},
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: getTeachersTable(courseSheet.getTeachers(true))),
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-            ),
-            sectionTitle('Teórico-Práticas'),
-            Table(
-                columnWidths: {1: FractionColumnWidth(.2)},
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: getTeachersTable(courseSheet.getTeachers(false))),
-          ])
-        ]);
+        children: [Column(children: getTeachers(courseSheet.getTeachers()))]);
+  }
+
+  List<Widget> getTeachers(Map<String, List<CourseUnitTeacher>> teachers) {
+    final List<Widget> widgets = [];
+    for (String type in teachers.keys) {
+      widgets.add(sectionTitle(type));
+      widgets.add(Table(
+          columnWidths: {1: FractionColumnWidth(.2)},
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: getTeachersTable(teachers[type])));
+      widgets.add(Container(
+        padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
+      ));
+    }
+    widgets.removeLast();
+    return widgets;
   }
 
   List<TableRow> getTeachersTable(List<CourseUnitTeacher> teachers) {

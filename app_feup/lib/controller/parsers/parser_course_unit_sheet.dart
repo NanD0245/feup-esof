@@ -69,19 +69,24 @@ List<CourseUnitTeacher> _parseTeachers(Element titleElement) {
   final List<CourseUnitTeacher> teachers = [];
   final table = titleElement.nextElementSibling.nextElementSibling;
   final rows = table.querySelectorAll('td.t');
-  bool theoretical = true;
+  //bool theoretical = true;
   bool foundFirstSeparator = false;
   for (var i = 0; i < rows.length; i += 2) {
     if (rows[i].classes.contains('k')) {
       if (foundFirstSeparator) {
-        theoretical = false;
+        //theoretical = false;
       }
       foundFirstSeparator = true;
       continue;
     }
     final String name = rows[i].text;
     final String hours = rows[i].nextElementSibling.nextElementSibling.text;
-    teachers.add(CourseUnitTeacher(name, theoretical, hours));
+    //teachers.add(CourseUnitTeacher(name, theoretical, hours));
+    if (i % 4 == 0) {
+      teachers.add(CourseUnitTeacher(name, 'Teóricas', hours));
+    } else {
+      teachers.add(CourseUnitTeacher(name, 'Teórico-Práticas', hours));
+    }
   }
   return teachers;
 }

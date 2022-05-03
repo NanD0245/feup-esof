@@ -1,8 +1,8 @@
 class CourseUnitTeacher {
   // expand upon this
   final String name;
-  final bool lecturesTheoretical;
   final String hours;
+  final String lecturesType;
 
-  CourseUnitTeacher(this.name, this.lecturesTheoretical, this.hours);
+  CourseUnitTeacher(this.name, this.lecturesType, this.hours);
 }
