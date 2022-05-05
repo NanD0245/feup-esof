@@ -66,7 +66,8 @@ class BusStopSelectionRowState extends State<BusStopSelectionRow> {
                                   onTap: () => toggleFavorite(context)),
                               IconButton(
                                 icon: Icon(Icons.cancel),
-                                color: Theme.of(context).buttonColor,
+                                // TODO: Change this to appropriate color
+                                color: Theme.of(context).colorScheme.secondary,
                                 onPressed: () {
                                   deleteStop(context);
                                 },

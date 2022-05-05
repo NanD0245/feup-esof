@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uni/view/Widgets/course_units/course_units_sheets_view.dart';
 import 'package:uni/view/Widgets/page_title.dart';
