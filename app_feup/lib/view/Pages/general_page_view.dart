@@ -57,7 +57,7 @@ abstract class GeneralPageViewState extends State<StatefulWidget> {
             key: GlobalKey<RefreshIndicatorState>(),
             child: child,
             onRefresh: refresh,
-            color: Theme.of(context).accentColor);
+            color: Theme.of(context).colorScheme.secondary);
       },
     );
   }

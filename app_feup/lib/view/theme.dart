@@ -11,7 +11,6 @@ const Color _mildBlack = Color.fromARGB(255, 0x30, 0x30, 0x30);
 ThemeData applicationLightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: Colors.white,
-  accentColor: _darkRed,
   dividerColor: _lightGrey,
   hintColor: _lightGrey,
   backgroundColor: _mildWhite,
@@ -71,5 +70,5 @@ ThemeData applicationLightTheme = ThemeData(
       return _grey; //the color when checkbox is unselected;
       },
     )
-  )
+  ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: _darkRed)
 );
