@@ -32,6 +32,7 @@ class SchedulePageView extends StatelessWidget {
         children: <Widget>[
           PageTitle(name: 'Horário'),
           TabBar(
+            indicatorColor: Theme.of(context).colorScheme.secondary,
             controller: tabController,
             isScrollable: true,
             tabs: createTabs(queryData, context),
