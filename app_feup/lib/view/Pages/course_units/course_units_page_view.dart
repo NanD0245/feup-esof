@@ -14,6 +14,7 @@ class CourseUnitsPageView extends StatelessWidget {
     final MediaQueryData queryData = MediaQuery.of(context);
     return Column(children: <Widget>[
       ListView(
+        key: const Key('courses'),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         children: <Widget>[

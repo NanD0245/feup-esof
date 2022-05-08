@@ -17,6 +17,7 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
     return Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+            key: Key(this.courseSheet.courseName),
             title: Text(
               this.courseSheet.courseName,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
@@ -42,9 +43,14 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
 
   Widget courseTeachersWidget() {
     return ExpansionTile(
+        key: Key(courseSheet.courseName + ' - Docencia'),
         title: sectionTitle('Docência'),
         tilePadding: EdgeInsets.only(right: 20),
-        children: [Column(children: getTeachers(courseSheet.getTeachers()))]);
+        children: [
+          Column(
+              children: getTeachers(courseSheet.getTeachers()),
+              key: Key(courseSheet.courseName + ' - Docencia Tables'))
+        ]);
   }
 
   List<Widget> getTeachers(Map<String, List<CourseUnitTeacher>> teachers) {
@@ -109,6 +115,7 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
   Widget courseObjectiveWidget() {
     return ExpansionTile(
         title: sectionTitle('Objetivos'),
+        key: Key(courseSheet.courseName + ' - Objetivos'),
         tilePadding: EdgeInsets.only(right: 20),
         children: [
           Container(
@@ -116,6 +123,7 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   courseSheet.goals,
+                  key: Key(courseSheet.courseName + ' - Objetivos Text'),
                   style: TextStyle(fontWeight: FontWeight.w400),
                 )),
           ),
@@ -125,6 +133,7 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
   Widget courseProgramWidget() {
     return ExpansionTile(
         title: sectionTitle('Programa'),
+        key: Key(courseSheet.courseName + ' - Programa'),
         tilePadding: EdgeInsets.only(right: 20),
         children: [
           Container(
@@ -132,6 +141,7 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   courseSheet.program,
+                  key: Key(courseSheet.courseName + ' - Programa Text'),
                   style: TextStyle(fontWeight: FontWeight.w400),
                 )),
           ),
@@ -141,10 +151,12 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
   Widget courseEvaluationWidget() {
     return ExpansionTile(
         title: sectionTitle('Avaliação'),
+        key: Key(courseSheet.courseName + ' - Avaliacao'),
         tilePadding: EdgeInsets.only(right: 20),
         children: [
           Column(children: [
             Table(
+                key: Key(courseSheet.courseName + ' - Avaliacao Table'),
                 columnWidths: {1: FractionColumnWidth(.3)},
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 children: getEvaluationTable()),
