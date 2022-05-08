@@ -1,8 +1,10 @@
 Feature: Accessing Course Information
   Course Information Component of the App
 
-  Scenario: Access the Lecturers of the Course
-    Given I am on the main page of the app
-    And I am enrolled in at least one course
-    When I press the course card
-    Then the system will show me its lecturers
+  Scenario: Access the Lecturers of a Course on the App
+    Given I tap the "Cadeiras" button
+    And I tap the "courses-page-tab-0" button
+    And I am enrolled in at least 1 course
+    And I tap the "Engenharia de Software" text
+    When I tap the "Engenharia de Software - Docencia" text
+    Then I expect the text "Engenharia de Software - Docencia Tables" to be present within 2 seconds
