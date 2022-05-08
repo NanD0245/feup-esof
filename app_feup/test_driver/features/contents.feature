@@ -1,8 +1,26 @@
 Feature: Accessing Course Information
   Course Information Component of the App
 
-  Scenario: Access a Course card on the App
-    Given I am on the main page of the app
-    And I am enrolled in at least one course
-    When I press the course card
-    Then the system will show me the course information
+  Scenario: Access the Objectives of a Course card on the App
+    Given I tap the "Cadeiras" button
+    And I tap the "courses-page-tab-0" button
+    And I am enrolled in at least 1 course
+    And I tap the "Engenharia de Software" text
+    When I tap the "Engenharia de Software - Objetivos" text
+    Then I expect the text "Engenharia de Software - Objetivos Text" to be present within 2 seconds
+
+  Scenario: Access the Program of a Course card on the App
+    Given I tap the "Cadeiras" button
+    And I tap the "courses-page-tab-0" button
+    And I am enrolled in at least 1 course
+    And I tap the "Engenharia de Software" text
+    When I tap the "Engenharia de Software - Programa" text
+    Then I expect the text "Engenharia de Software - Programa Text" to be present within 2 seconds
+
+  Scenario: Access the Evaluation of a Course card on the App
+    Given I tap the "Cadeiras" button
+    And I tap the "courses-page-tab-0" button
+    And I am enrolled in at least 1 course
+    And I tap the "Engenharia de Software" text
+    When I tap the "Engenharia de Software - Avaliacao" text
+    Then I expect the text "Engenharia de Software - Avaliacao Table" to be present within 2 seconds
