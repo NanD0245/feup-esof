@@ -13,8 +13,9 @@ Future<void> main() {
       ProgressReporter(),
       TestRunSummaryReporter(),
       JsonReporter(path: './report.json')
-    ] // you can include the "StdoutReporter()" without the message level parameter for verbose log information
-    ..stepDefinitions = [EnrolledAtLeastNCourseStep(), OpenSideDrawerStep()]
+    ] // you can include the "StdoutReporter()" without the message level
+    //   parameter for verbose log information
+    ..stepDefinitions = [enrolledAtLeastNCourseStep(), openSideDrawerStep()]
     ..customStepParameterDefinitions = []
     ..restartAppBetweenScenarios = true
     ..targetAppPath = 'test_driver/app.dart';
