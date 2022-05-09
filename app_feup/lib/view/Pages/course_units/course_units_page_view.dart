@@ -41,7 +41,7 @@ class CourseUnitsPageView extends StatelessWidget {
       tabs.add(Container(
         color: Theme.of(context).backgroundColor,
         width: queryData.size.width * 1 / 4,
-        child: Tab(key: Key('courses-page-tab-$i'), text: coursesTabs[i]),
+        child: Tab(key: Key(coursesTabs[i]), text: coursesTabs[i]),
       ));
     }
     return tabs;

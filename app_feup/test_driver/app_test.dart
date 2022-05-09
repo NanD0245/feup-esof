@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:flutter_gherkin/flutter_gherkin.dart';
 import 'package:gherkin/gherkin.dart';
 
-import 'steps/be_on_page_step.dart';
-import 'steps/be_on_tab_step.dart';
 import 'steps/enrolled_at_least_n_course_step.dart';
-import 'steps/tap_button_n_times_step.dart';
+import 'steps/open_side_drawer_step.dart';
 
 Future<void> main() {
   final config = FlutterTestConfiguration()
@@ -16,7 +14,7 @@ Future<void> main() {
       TestRunSummaryReporter(),
       JsonReporter(path: './report.json')
     ] // you can include the "StdoutReporter()" without the message level parameter for verbose log information
-    ..stepDefinitions = [EnrolledAtLeastNCourseStep()]
+    ..stepDefinitions = [EnrolledAtLeastNCourseStep(), OpenSideDrawerStep()]
     ..customStepParameterDefinitions = []
     ..restartAppBetweenScenarios = true
     ..targetAppPath = 'test_driver/app.dart';
