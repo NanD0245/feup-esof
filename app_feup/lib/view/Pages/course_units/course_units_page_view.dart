@@ -14,6 +14,7 @@ class CourseUnitsPageView extends StatelessWidget {
     final MediaQueryData queryData = MediaQuery.of(context);
     return Column(children: <Widget>[
       ListView(
+        key: const Key('courses'),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         children: <Widget>[
@@ -40,7 +41,7 @@ class CourseUnitsPageView extends StatelessWidget {
       tabs.add(Container(
         color: Theme.of(context).backgroundColor,
         width: queryData.size.width * 1 / 4,
-        child: Tab(key: Key('courses-page-tab-$i'), text: coursesTabs[i]),
+        child: Tab(key: Key(coursesTabs[i]), text: coursesTabs[i]),
       ));
     }
     return tabs;
