@@ -6,6 +6,7 @@ Feature: Accessing Course Information
     And I tap the "Cadeiras" button
     And I tap the "Fichas" button
     And I am enrolled in at least 1 course
+    And I am enrolled in "Projeto Integrador"
     And I tap the "Projeto Integrador" text
     When I tap the "Projeto Integrador - Docencia" text
     Then I expect the text "Projeto Integrador - Docencia Tables" to be present within 2 seconds
