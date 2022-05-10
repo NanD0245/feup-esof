@@ -4,8 +4,8 @@ import 'package:tuple/tuple.dart';
 import 'package:uni/model/entities/course_unit_sheet.dart';
 
 import '../../../model/app_state.dart';
-import '../request_dependent_widget_builder.dart';
-import 'course_unit_sheet_card.dart';
+import '../../Widgets/course_units/course_unit_sheet_card.dart';
+import '../../Widgets/request_dependent_widget_builder.dart';
 
 class CourseUnitsSheetsView extends StatefulWidget {
   @override
