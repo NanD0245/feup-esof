@@ -23,7 +23,7 @@ Feature: Accessing Course Information
     Given I open the side drawer
     And I tap the "Cadeiras" button
     And I tap the "Fichas" button
-    And I am enrolled in at least 1 course
+    And I am enrolled "Linguagens e Tecnologias Web"
     And I tap the "Linguagens e Tecnologias Web" text
     When I tap the "Linguagens e Tecnologias Web - Avaliacao" text
     Then I expect the text "Linguagens e Tecnologias Web - Avaliacao Table" to be present within 2 seconds
