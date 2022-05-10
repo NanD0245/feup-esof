@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../../testable_widget.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_sheet_card.dart';
