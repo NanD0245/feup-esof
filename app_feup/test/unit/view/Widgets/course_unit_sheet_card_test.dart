@@ -35,7 +35,8 @@ void main(){
       expect(textName, findsOneWidget);
     });
 
-    testWidgets('When given a simple Unit Sheet, press the \'Objetivos\' button', (WidgetTester tester) async {
+    testWidgets('When given a simple Unit Sheet, press the \'Objetivos\' button',
+                (WidgetTester tester) async {
       final widget = makeTestableWidget(
         child: CourseUnitSheetCard(mockCourseUnitSheet)
       );
