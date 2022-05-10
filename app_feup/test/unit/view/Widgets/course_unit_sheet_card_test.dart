@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../../testable_widget.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_sheet_card.dart';
@@ -22,6 +23,7 @@ void main(){
   final mockCourseUnitSheet = CourseUnitSheet(mockName, mockGoals, mockProgram,
       evaluationComponents, mockTeachers, mockActive);
 
+  group('UnitSheets', () {
     testWidgets('When given a simple Unit Sheet', (WidgetTester tester) async {
       final widget = makeTestableWidget(
         child: CourseUnitSheetCard(mockCourseUnitSheet)
@@ -32,4 +34,28 @@ void main(){
       final textName = find.text('Name');
       expect(textName, findsOneWidget);
     });
+
+    testWidgets('When given a simple Unit Sheet, press the \'Objetivos\' button', (WidgetTester tester) async {
+      final widget = makeTestableWidget(
+        child: CourseUnitSheetCard(mockCourseUnitSheet)
+      );
+
+      await tester.pumpWidget(widget);
+
+      final unit = find.byType(ExpansionTile);
+
+      await tester.tap(unit, warnIfMissed : true);
+      await tester.pump();
+
+      final objectiveTest = find.text('Objetivos');
+      final programaTest = find.text('Programa');
+      final avaliacaoTest = find.text('Avaliação');
+      final docenciaTest = find.text('Docência');
+    
+      expect(objectiveTest, findsOneWidget);
+      expect(programaTest, findsOneWidget);
+      expect(avaliacaoTest, findsOneWidget);
+      expect(docenciaTest, findsOneWidget);
+    });
+  });
 }
