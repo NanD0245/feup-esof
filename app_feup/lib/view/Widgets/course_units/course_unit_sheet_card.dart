@@ -20,6 +20,8 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
             key: Key(this.courseSheet.courseName),
             title: Text(
               this.courseSheet.courseName,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
             ),
             children: [courseSheetWidget()],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tuple/tuple.dart';
 import 'package:uni/model/entities/course_unit.dart';
+import 'package:uni/view/Widgets/course_units/course_unit_result_card.dart';
 
 import '../../../model/app_state.dart';
 import '../../Widgets/request_dependent_widget_builder.dart';
@@ -30,9 +31,9 @@ class _CourseUnitsResultsViewState extends State<StatefulWidget> {
               final List<Widget> pastCourseCards = [];
               courseUnitsResults.forEach((courseUnit) {
                 if (courseUnit.result != 'A') {
-                  activeCourseCards.add(Text(courseUnit.name));
+                  activeCourseCards.add(CourseUnitResultCard(courseUnit));
                 } else {
-                  pastCourseCards.add(Text(courseUnit.name));
+                  pastCourseCards.add(CourseUnitResultCard(courseUnit));
                 }
               });
               return ListView(
@@ -53,7 +54,12 @@ class _CourseUnitsResultsViewState extends State<StatefulWidget> {
                             textScaleFactor: 0.8,
                           )),
                     ])
-                    ..addAll(pastCourseCards));
+                    ..addAll(pastCourseCards)
+                    ..addAll([
+                      Container(
+                        padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
+                      )
+                    ]));
             },
           );
         },
