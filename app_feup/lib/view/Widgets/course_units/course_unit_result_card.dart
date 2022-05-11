@@ -14,6 +14,8 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
     return Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          textColor: Theme.of(context).colorScheme.secondary,
+          iconColor: Theme.of(context).colorScheme.secondary,
           childrenPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
           title: ListTile(
             dense: true,
@@ -44,7 +46,6 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
           getTableRowInfos('Créditos:', this.courseUnit.ects.toString()),
           getTableRowInfos('Ano:', this.courseUnit.curricularYear.toString()),
           getTableRowInfos('Semestre:', this.courseUnit.semesterCode),
-          //to change according to status
           getTableRowInfos('Nota:', this.courseUnit.grade)
         ]);
   }

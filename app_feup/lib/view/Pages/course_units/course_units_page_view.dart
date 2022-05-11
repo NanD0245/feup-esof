@@ -21,6 +21,7 @@ class CourseUnitsPageView extends StatelessWidget {
         children: <Widget>[
           PageTitle(name: 'Cadeiras'),
           TabBar(
+            indicatorColor: Theme.of(context).colorScheme.secondary,
             controller: tabController,
             isScrollable: true,
             tabs: createTabs(queryData, context),
