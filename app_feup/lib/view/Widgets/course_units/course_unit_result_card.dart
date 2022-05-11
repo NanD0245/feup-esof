@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:uni/model/entities/course_unit.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_generic_card.dart';
 
