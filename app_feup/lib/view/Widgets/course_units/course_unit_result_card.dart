@@ -13,20 +13,63 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
   Widget buildCardContent(BuildContext context) {
     return Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ListTile(
-          title: Text(
-            this.courseUnit.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
+        child: ExpansionTile(
+          childrenPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+          title: ListTile(
+            dense: true,
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              this.courseUnit.name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
+            ),
+            trailing: Text(
+              this.courseUnit.grade,
+              style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromARGB(255, 0x75, 0x17, 0x1e)),
+            ),
           ),
-          trailing: Text(
-            this.courseUnit.grade,
-            style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w400,
-                color: Color.fromARGB(255, 0x75, 0x17, 0x1e)),
-          ),
+          children: [getCourseUnitInfos(courseUnit)],
         ));
+  }
+
+  Widget getCourseUnitInfos(CourseUnit courseUnit) {
+    return Table(
+        columnWidths: {1: FractionColumnWidth(.2)},
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          getTableRowInfos('Créditos:', this.courseUnit.ects.toString()),
+          getTableRowInfos('Ano:', this.courseUnit.curricularYear.toString()),
+          getTableRowInfos('Semestre:', this.courseUnit.semesterCode),
+          //to change according to status
+          getTableRowInfos('Nota:', this.courseUnit.grade)
+        ]);
+  }
+
+  TableRow getTableRowInfos(String info, String value) {
+    return TableRow(children: [
+      Container(
+        child: Text(
+          info,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+        ),
+        padding: EdgeInsets.only(top: 8, bottom: 8),
+      ),
+      Container(
+        child: Text(
+          value,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.right,
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+        ),
+        padding: EdgeInsets.only(top: 8, bottom: 8),
+      ),
+    ]);
   }
 }
