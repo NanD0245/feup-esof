@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uni/view/Pages/course_units/course_units_classes_view.dart';
 import 'package:uni/view/Pages/course_units/course_units_results_view.dart';
 import 'package:uni/view/Pages/course_units/course_units_sheets_view.dart';
 import 'package:uni/view/Widgets/page_title.dart';
@@ -52,8 +53,8 @@ class CourseUnitsPageView extends StatelessWidget {
   List<Widget> createCourses(BuildContext context) {
     return [
       CourseUnitsSheetsView(),
-      Center(child: Text('Not implemented yet')),
-      Center(child: Text('Not implemented yet')),
+      CourseUnitsClassesView(),
+      Center(child: Text('In progress...')),
       CourseUnitsResultsView()
     ];
   }
