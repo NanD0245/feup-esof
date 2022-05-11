@@ -36,17 +36,6 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
           ),
           children: [
             getCourseUnitInfos(courseUnit),
-            ExpansionTile(
-              iconColor: Theme.of(context).colorScheme.secondary,
-              title: Text(
-                'Resultados',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: Color.fromRGBO(50, 50, 50, 100),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500),
-              ),
-            )
           ],
         ));
   }
