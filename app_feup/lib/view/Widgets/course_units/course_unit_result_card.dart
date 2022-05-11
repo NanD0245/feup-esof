@@ -34,7 +34,20 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
                   color: Color.fromARGB(255, 0x75, 0x17, 0x1e)),
             ),
           ),
-          children: [getCourseUnitInfos(courseUnit)],
+          children: [
+            getCourseUnitInfos(courseUnit),
+            ExpansionTile(
+              iconColor: Theme.of(context).colorScheme.secondary,
+              title: Text(
+                'Resultados',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Color.fromRGBO(50, 50, 50, 100),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
+              ),
+            )
+          ],
         ));
   }
 
@@ -46,7 +59,7 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
           getTableRowInfos('Créditos:', this.courseUnit.ects.toString()),
           getTableRowInfos('Ano:', this.courseUnit.curricularYear.toString()),
           getTableRowInfos('Semestre:', this.courseUnit.semesterCode),
-          getTableRowInfos('Nota:', this.courseUnit.grade)
+          getTableRowInfos('Nota:', this.courseUnit.grade),
         ]);
   }
 
