@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uni/model/entities/CourseUnitClasses.dart';
+import 'package:logger/logger.dart';
 import 'package:uni/model/entities/course_unit_class.dart';
+import 'package:uni/model/entities/course_unit_classes.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_generic_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -75,7 +76,7 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
               try {
                 await launchUrl(Uri.parse(url));
               } catch (e) {
-                print(e.toString());
+                Logger().e(e.toString());
               }
             },
           )));

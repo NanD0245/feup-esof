@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uni/model/entities/CourseUnitClasses.dart';
 import 'package:uni/model/entities/course_unit_class.dart';
+import 'package:uni/model/entities/course_unit_classes.dart';
 import 'package:uni/model/entities/course_unit_student.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_class_card.dart';
 
