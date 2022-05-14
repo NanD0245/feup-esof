@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uni/view/Widgets/course_units/course_units_sheets_view.dart';
+import 'package:uni/view/Pages/course_units/course_units_results_view.dart';
+import 'package:uni/view/Pages/course_units/course_units_sheets_view.dart';
 import 'package:uni/view/Widgets/page_title.dart';
 
 class CourseUnitsPageView extends StatelessWidget {
@@ -20,6 +21,7 @@ class CourseUnitsPageView extends StatelessWidget {
         children: <Widget>[
           PageTitle(name: 'Cadeiras'),
           TabBar(
+            indicatorColor: Theme.of(context).colorScheme.secondary,
             controller: tabController,
             isScrollable: true,
             tabs: createTabs(queryData, context),
@@ -52,7 +54,7 @@ class CourseUnitsPageView extends StatelessWidget {
       CourseUnitsSheetsView(),
       Center(child: Text('Not implemented yet')),
       Center(child: Text('Not implemented yet')),
-      Center(child: Text('Not implemented yet'))
+      CourseUnitsResultsView()
     ];
   }
 }

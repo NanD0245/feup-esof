@@ -17,21 +17,27 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
     return Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+            textColor: Theme.of(context).colorScheme.secondary,
+            iconColor: Theme.of(context).colorScheme.secondary,
             key: Key(this.courseSheet.courseName),
             title: Text(
               this.courseSheet.courseName,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
             ),
-            children: [courseSheetWidget()],
+            children: [
+              courseSheetWidget(Theme.of(context).colorScheme.secondary)
+            ],
             childrenPadding: EdgeInsets.only(bottom: padding)));
   }
 
-  Widget courseSheetWidget() {
+  Widget courseSheetWidget(Color iconColor) {
     final List<Widget> sections = [
-      courseObjectiveWidget(),
-      courseProgramWidget(),
-      courseEvaluationWidget(),
-      courseTeachersWidget()
+      courseObjectiveWidget(iconColor),
+      courseProgramWidget(iconColor),
+      courseEvaluationWidget(iconColor),
+      courseTeachersWidget(iconColor)
     ];
     return Align(
         alignment: Alignment.centerLeft,
@@ -41,8 +47,9 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
         );
   }
 
-  Widget courseTeachersWidget() {
+  Widget courseTeachersWidget(Color iconColor) {
     return ExpansionTile(
+        iconColor: iconColor,
         key: Key(courseSheet.courseName + ' - Docencia'),
         title: sectionTitle('Docência'),
         tilePadding: EdgeInsets.only(right: 20),
@@ -112,8 +119,9 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
         teachersTableLines;
   }
 
-  Widget courseObjectiveWidget() {
+  Widget courseObjectiveWidget(Color iconColor) {
     return ExpansionTile(
+        iconColor: iconColor,
         title: sectionTitle('Objetivos'),
         key: Key(courseSheet.courseName + ' - Objetivos'),
         tilePadding: EdgeInsets.only(right: 20),
@@ -130,8 +138,9 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
         ]);
   }
 
-  Widget courseProgramWidget() {
+  Widget courseProgramWidget(Color iconColor) {
     return ExpansionTile(
+        iconColor: iconColor,
         title: sectionTitle('Programa'),
         key: Key(courseSheet.courseName + ' - Programa'),
         tilePadding: EdgeInsets.only(right: 20),
@@ -148,8 +157,9 @@ class CourseUnitSheetCard extends CourseUnitGenericCard {
         ]);
   }
 
-  Widget courseEvaluationWidget() {
+  Widget courseEvaluationWidget(Color iconColor) {
     return ExpansionTile(
+        iconColor: iconColor,
         title: sectionTitle('Avaliação'),
         key: Key(courseSheet.courseName + ' - Avaliacao'),
         tilePadding: EdgeInsets.only(right: 20),
