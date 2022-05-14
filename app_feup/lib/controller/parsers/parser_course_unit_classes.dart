@@ -17,9 +17,13 @@ Future<CourseUnitClasses> parseCourseUnitClasses(
         title.innerHtml.indexOf(' ') + 1, title.innerHtml.indexOf('&'));
     final table = title.nextElementSibling;
     final studentRows = table.querySelectorAll('tr').sublist(1);
-    List<CourseUnitStudent> students = [];
-    for (var row in studentRows) {
-      students.add(CourseUnitStudent('David', 'up', 'david@gmail.com'));
+    final List<CourseUnitStudent> students = [];
+    for (final row in studentRows) {
+      final columns = row.querySelectorAll('td.k.t');
+      final studentName = columns[0].children[0].innerHtml;
+      final studentNumber = 'up' + columns[1].innerHtml;
+      final studentMail = columns[2].innerHtml;
+      students.add(CourseUnitStudent(studentName, studentNumber, studentMail));
     }
     classes.add(CourseUnitClass(courseName, students));
   }
