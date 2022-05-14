@@ -13,7 +13,7 @@ Future<CourseUnitClasses> parseCourseUnitClasses(
 
   final titles = document.querySelectorAll('#conteudoinner h3').sublist(1);
   for (final title in titles) {
-    final courseName = title.innerHtml.substring(
+    final className = title.innerHtml.substring(
         title.innerHtml.indexOf(' ') + 1, title.innerHtml.indexOf('&'));
     final table = title.nextElementSibling;
     final studentRows = table.querySelectorAll('tr').sublist(1);
@@ -25,7 +25,7 @@ Future<CourseUnitClasses> parseCourseUnitClasses(
       final studentMail = columns[2].innerHtml;
       students.add(CourseUnitStudent(studentName, studentNumber, studentMail));
     }
-    classes.add(CourseUnitClass(courseName, students));
+    classes.add(CourseUnitClass(className, students));
   }
 
   return CourseUnitClasses(courseUnit.name, classes, courseUnit.result != 'A');
