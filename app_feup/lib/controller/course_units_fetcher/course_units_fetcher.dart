@@ -1,3 +1,4 @@
+import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:uni/controller/parsers/parser_course_unit_sheet.dart';
 import 'package:uni/model/entities/course_units/course_unit_classes.dart';
@@ -5,9 +6,8 @@ import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
 
 import '../../controller/networking/network_router.dart';
 import '../../model/entities/course_units/course_unit.dart';
-import '../../model/entities/course_units/course_unit_class.dart';
-import '../../model/entities/course_units/course_unit_student.dart';
 import '../../model/entities/session.dart';
+import '../parsers/parser_course_unit_classes.dart';
 
 class CourseUnitsFetcher {
   Future<List<CourseUnitSheet>> getCourseUnitsSheets(
@@ -27,7 +27,23 @@ class CourseUnitsFetcher {
 
   Future<List<CourseUnitClasses>> getCourseUnitsClasses(
       Session session, List<CourseUnit> userUcs) async {
-    final List<CourseUnitClasses> courseUnitClasses = [
+    final List<CourseUnitClasses> courseUnitsClasses = [];
+    for (CourseUnit courseUnit in userUcs) {
+      final String refreshUrl = NetworkRouter.getBaseUrl(session.faculty) +
+          'it_listagem.lista_cursos_disciplina' +
+          '?pv_ocorrencia_id=${courseUnit.occurrId}';
+      final Response refreshResponse =
+          await NetworkRouter.getWithCookies(refreshUrl, {}, session);
+      final refreshDocument = parse(refreshResponse.body);
+      final url = refreshDocument.querySelector('a').attributes['href'];
+      final Future<Response> response =
+          NetworkRouter.getWithCookies(url, {}, session);
+      final CourseUnitClasses courseUnitClasses = await response
+          .then((response) => parseCourseUnitClasses(courseUnit, response));
+      courseUnitsClasses.add(courseUnitClasses);
+    }
+    return courseUnitsClasses;
+/*    final List<CourseUnitClasses> courseUnitClasses = [
       CourseUnitClasses(
           'Laboratório de Computadores',
           [
@@ -55,6 +71,6 @@ class CourseUnitsFetcher {
           ],
           false)
     ];
-    return courseUnitClasses;
+    return courseUnitClasses;*/
   }
 }
