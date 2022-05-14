@@ -29,13 +29,23 @@ class CourseUnitsFetcher {
       Session session, List<CourseUnit> userUcs) async {
     final List<CourseUnitClasses> courseUnitsClasses = [];
     for (CourseUnit courseUnit in userUcs) {
-      final String refreshUrl = NetworkRouter.getBaseUrl(session.faculty) +
+      final String courseChoiceUrl = NetworkRouter.getBaseUrl(session.faculty) +
           'it_listagem.lista_cursos_disciplina' +
           '?pv_ocorrencia_id=${courseUnit.occurrId}';
-      final Response refreshResponse =
-          await NetworkRouter.getWithCookies(refreshUrl, {}, session);
-      final refreshDocument = parse(refreshResponse.body);
-      final url = refreshDocument.querySelector('a').attributes['href'];
+      final Response courseChoiceResponse =
+          await NetworkRouter.getWithCookies(courseChoiceUrl, {}, session);
+      final courseChoiceDocument = parse(courseChoiceResponse.body);
+      var url = courseChoiceDocument
+          .querySelectorAll('a')
+          .where((element) =>
+              element.attributes['href'] != null &&
+              element.attributes['href']
+                  .contains('it_listagem.lista_turma_disciplina'))
+          .toList()[0]
+          .attributes['href'];
+      if (!url.contains('sigarra.up.pt')) {
+        url = NetworkRouter.getBaseUrl(session.faculty) + url;
+      }
       final Future<Response> response =
           NetworkRouter.getWithCookies(url, {}, session);
       final CourseUnitClasses courseUnitClasses = await response
@@ -43,34 +53,5 @@ class CourseUnitsFetcher {
       courseUnitsClasses.add(courseUnitClasses);
     }
     return courseUnitsClasses;
-/*    final List<CourseUnitClasses> courseUnitClasses = [
-      CourseUnitClasses(
-          'Laboratório de Computadores',
-          [
-            CourseUnitClass('2LEIC01', [
-              CourseUnitStudent('Fernando Luis Santos Rego', 'up201905951',
-                  'up201905951@edu.fe.up.pt'),
-              CourseUnitStudent(
-                  'Bruno Mendes', 'up201906166', 'up201906166@edu.fe.up.pt')
-            ]),
-            CourseUnitClass('2LEIC02', [
-              CourseUnitStudent(
-                  'Olá pessoa', 'up201902351', 'up201902351@edu.fe.up.pt')
-            ]),
-          ],
-          true),
-      CourseUnitClasses(
-          'Compiladores',
-          [
-            CourseUnitClass('2LEIC01', [
-              CourseUnitStudent('Fernando Luis Santos Rego', 'up201905951',
-                  'up201905951@edu.fe.up.pt'),
-              CourseUnitStudent(
-                  'Bruno Mendes', 'up201906166', 'up201906166@edu.fe.up.pt')
-            ]),
-          ],
-          false)
-    ];
-    return courseUnitClasses;*/
   }
 }
