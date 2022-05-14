@@ -27,7 +27,7 @@ class _CourseUnitsSheetsViewState extends State<StatefulWidget> {
             status: courseUnitsSheetsStatus,
             content: courseUnitsSheets,
             contentChecker: courseUnitsSheets?.isNotEmpty ?? false,
-            contentGenerator: (dynamic courseUnitSheets, BuildContext context) {
+            contentGenerator: (_, BuildContext context) {
               final List<Widget> activeCourseCards = [];
               final List<Widget> pastCourseCards = [];
               courseUnitsSheets.forEach((courseUnitSheet) {

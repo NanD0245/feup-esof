@@ -17,6 +17,10 @@ AppState appReducers(AppState state, dynamic action) {
     return setCourseUnitsSheets(state, action);
   } else if (action is SetCourseUnitSheetsStatusAction) {
     return setCourseUnitsSheetsStatus(state, action);
+  } else if (action is SetCourseUnitClassesAction) {
+    return setCourseUnitsClasses(state, action);
+  } else if (action is SetCourseUnitClassesStatusAction) {
+    return setCourseUnitsClassesStatus(state, action);
   } else if (action is SetScheduleStatusAction) {
     return setScheduleStatus(state, action);
   } else if (action is SetScheduleAction) {
