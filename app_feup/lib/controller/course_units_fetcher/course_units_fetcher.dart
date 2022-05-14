@@ -1,9 +1,9 @@
 import 'package:http/http.dart';
 import 'package:uni/controller/parsers/parser_course_unit_sheet.dart';
-import 'package:uni/model/entities/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
 
 import '../../controller/networking/network_router.dart';
-import '../../model/entities/course_unit.dart';
+import '../../model/entities/course_units/course_unit.dart';
 import '../../model/entities/session.dart';
 
 class CourseUnitsFetcher {

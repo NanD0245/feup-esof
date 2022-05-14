@@ -1,6 +1,7 @@
 import 'package:uni/model/app_state.dart';
-import 'package:uni/model/entities/course_unit.dart';
-import 'package:uni/model/entities/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_units/course_unit.dart';
+import 'package:uni/model/entities/course_units/course_unit_classes.dart';
+import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
 import 'package:uni/model/entities/exam.dart';
 import 'package:uni/model/entities/lecture.dart';
 import 'package:uni/model/entities/profile.dart';
@@ -40,6 +41,16 @@ class SetCourseUnitSheetsAction {
 class SetCourseUnitSheetsStatusAction {
   RequestStatus status;
   SetCourseUnitSheetsStatusAction(this.status);
+}
+
+class SetCourseUnitClassesAction {
+  List<CourseUnitClasses> courseUnitsClasses;
+  SetCourseUnitClassesAction(this.courseUnitsClasses);
+}
+
+class SetCourseUnitClassesStatusAction {
+  RequestStatus status;
+  SetCourseUnitClassesStatusAction(this.status);
 }
 
 class SetRestaurantsAction {

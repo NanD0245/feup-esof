@@ -1,11 +1,11 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:uni/model/entities/course_unit_evaluation_component.dart';
-import 'package:uni/model/entities/course_unit_sheet.dart';
-import 'package:uni/model/entities/course_unit_teacher.dart';
+import 'package:uni/model/entities/course_units/course_unit_evaluation_component.dart';
+import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_units/course_unit_teacher.dart';
 
-import '../../model/entities/course_unit.dart';
+import '../../model/entities/course_units/course_unit.dart';
 
 Future<CourseUnitSheet> parseCourseUnitSheet(
     CourseUnit courseUnit, http.Response sheetPageResponse) async {
