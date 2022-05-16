@@ -59,7 +59,8 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
       trips = Completer(),
       lastUpdate = Completer(),
       restaurants = Completer(),
-      courseUnitsSheets = Completer();
+      courseUnitsSheets = Completer(),
+      courseUnitsClasses = Completer();
 
   store.dispatch(getUserInfo(userInfo));
   store.dispatch(getUserPrintBalance(printBalance));
@@ -74,6 +75,7 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
     store.dispatch(getUserExams(exams, ParserExams(), userPersistentInfo));
     store.dispatch(getUserSchedule(schedule, userPersistentInfo));
     store.dispatch(getCourseUnitsSheetsFromFetcher(courseUnitsSheets));
+    store.dispatch(getCourseUnitsClassesFromFetcher(courseUnitsClasses));
   });
 
   final allRequests = Future.wait([
@@ -85,7 +87,8 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
     userInfo.future,
     trips.future,
     restaurants.future,
-    courseUnitsSheets.future
+    courseUnitsSheets.future,
+    courseUnitsClasses.future,
   ]);
   allRequests.then((futures) {
     store.dispatch(setLastUserInfoUpdateTimestamp(lastUpdate));

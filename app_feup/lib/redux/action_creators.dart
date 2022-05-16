@@ -28,8 +28,9 @@ import 'package:uni/controller/schedule_fetcher/schedule_fetcher_api.dart';
 import 'package:uni/controller/schedule_fetcher/schedule_fetcher_html.dart';
 import 'package:uni/model/app_state.dart';
 import 'package:uni/model/entities/course.dart';
-import 'package:uni/model/entities/course_unit.dart';
-import 'package:uni/model/entities/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_units/course_unit.dart';
+import 'package:uni/model/entities/course_units/course_unit_classes.dart';
+import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
 import 'package:uni/model/entities/exam.dart';
 import 'package:uni/model/entities/lecture.dart';
 import 'package:uni/model/entities/profile.dart';
@@ -319,7 +320,26 @@ ThunkAction<AppState> getCourseUnitsSheetsFromFetcher(Completer<Null> action) {
       store.dispatch(SetCourseUnitSheetsStatusAction(RequestStatus.successful));
     } catch (e) {
       Logger().e('Failed to get course unit sheets: ${e.toString()}');
-      store.dispatch(SetRestaurantsStatusAction(RequestStatus.failed));
+      store.dispatch(SetCourseUnitSheetsStatusAction(RequestStatus.failed));
+    }
+    action.complete();
+  };
+}
+
+ThunkAction<AppState> getCourseUnitsClassesFromFetcher(Completer<Null> action) {
+  return (Store<AppState> store) async {
+    try {
+      store.dispatch(SetCourseUnitClassesStatusAction(RequestStatus.busy));
+      final List<CourseUnitClasses> courseUnitsClasses =
+          await CourseUnitsFetcher().getCourseUnitsClasses(
+              store.state.content['session'], store.state.content['currUcs']);
+      // TO DO: Add to local db
+      store.dispatch(SetCourseUnitClassesAction(courseUnitsClasses));
+      store
+          .dispatch(SetCourseUnitClassesStatusAction(RequestStatus.successful));
+    } catch (e) {
+      Logger().e('Failed to get course unit classes: ${e.toString()}');
+      store.dispatch(SetCourseUnitClassesStatusAction(RequestStatus.failed));
     }
     action.complete();
   };

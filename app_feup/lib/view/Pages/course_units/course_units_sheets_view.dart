@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tuple/tuple.dart';
-import 'package:uni/model/entities/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
 
 import '../../../model/app_state.dart';
 import '../../Widgets/course_units/course_unit_sheet_card.dart';
@@ -27,7 +27,7 @@ class _CourseUnitsSheetsViewState extends State<StatefulWidget> {
             status: courseUnitsSheetsStatus,
             content: courseUnitsSheets,
             contentChecker: courseUnitsSheets?.isNotEmpty ?? false,
-            contentGenerator: (dynamic courseUnitSheets, BuildContext context) {
+            contentGenerator: (_, BuildContext context) {
               final List<Widget> activeCourseCards = [];
               final List<Widget> pastCourseCards = [];
               courseUnitsSheets.forEach((courseUnitSheet) {

@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tuple/tuple.dart';
-import 'package:uni/model/entities/course_units/course_unit.dart';
-import 'package:uni/view/Widgets/course_units/course_unit_result_card.dart';
+import 'package:uni/model/app_state.dart';
+import 'package:uni/model/entities/course_units/course_unit_classes.dart';
+import 'package:uni/view/Widgets/request_dependent_widget_builder.dart';
 
-import '../../../model/app_state.dart';
-import '../../Widgets/request_dependent_widget_builder.dart';
+import '../../Widgets/course_units/course_unit_class_card.dart';
 
-class CourseUnitsResultsView extends StatefulWidget {
+class CourseUnitsClassesView extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _CourseUnitsResultsViewState();
+  State<StatefulWidget> createState() => _CourseUnitsClassesViewState();
 }
 
-class _CourseUnitsResultsViewState extends State<StatefulWidget> {
+class _CourseUnitsClassesViewState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, Tuple2<List<CourseUnit>, RequestStatus>>(
-        builder: (context, courseUnitsResultData) {
-          final courseUnitsResults = courseUnitsResultData.item1;
-          final courseUnitsResultsStatus = courseUnitsResultData.item2;
+    return StoreConnector<AppState,
+            Tuple2<List<CourseUnitClasses>, RequestStatus>>(
+        builder: (context, courseUnitsClassesData) {
+          final courseUnitsClasses = courseUnitsClassesData.item1;
+          final courseUnitsClassesStatus = courseUnitsClassesData.item2;
           return RequestDependentWidgetBuilder(
             context: context,
             onNullContent:
-                Center(child: Text('Não existem resultados para apresentar')),
-            status: courseUnitsResultsStatus,
-            content: courseUnitsResults,
-            contentChecker: courseUnitsResults?.isNotEmpty ?? false,
-            contentGenerator: (dynamic courseUnitResult, BuildContext context) {
+                Center(child: Text('Não existem turmas para apresentar')),
+            status: courseUnitsClassesStatus,
+            content: courseUnitsClasses,
+            contentChecker: courseUnitsClasses?.isNotEmpty ?? false,
+            contentGenerator: (_, BuildContext context) {
               final List<Widget> activeCourseCards = [];
               final List<Widget> pastCourseCards = [];
-              courseUnitsResults.forEach((courseUnit) {
-                if (courseUnit.result != 'A') {
-                  activeCourseCards.add(CourseUnitResultCard(courseUnit));
+              courseUnitsClasses.forEach((course) {
+                if (course.active) {
+                  activeCourseCards.add(CourseUnitClassCard(course));
                 } else {
-                  pastCourseCards.add(CourseUnitResultCard(courseUnit));
+                  pastCourseCards.add(CourseUnitClassCard(course));
                 }
               });
               return ListView(
@@ -63,7 +64,7 @@ class _CourseUnitsResultsViewState extends State<StatefulWidget> {
             },
           );
         },
-        converter: (store) => Tuple2(store.state.content['currUcs'],
-            store.state.content['profileStatus']));
+        converter: (store) => Tuple2(store.state.content['ucsClasses'],
+            store.state.content['ucsClassesStatus']));
   }
 }

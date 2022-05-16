@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:uni/model/entities/course_unit_evaluation_component.dart';
-import 'package:uni/model/entities/course_unit_teacher.dart';
+import 'package:uni/model/entities/course_units/course_unit_evaluation_component.dart';
+import 'package:uni/model/entities/course_units/course_unit_teacher.dart';
 
 class CourseUnitSheet {
   // expand upon this
