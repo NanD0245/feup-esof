@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uni/model/entities/course_unit_evaluation_component.dart';
-import 'package:uni/model/entities/course_unit_sheet.dart';
-import 'package:uni/model/entities/course_unit_teacher.dart';
+import 'package:uni/model/entities/course_units/course_unit_evaluation_component.dart';
+import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
+import 'package:uni/model/entities/course_units/course_unit_teacher.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_generic_card.dart';
 
 import 'course_unit_generic_card.dart';

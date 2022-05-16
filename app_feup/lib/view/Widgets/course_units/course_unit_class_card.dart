@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:uni/model/entities/course_unit_class.dart';
-import 'package:uni/model/entities/course_unit_classes.dart';
+import 'package:uni/model/entities/course_units/course_unit_class.dart';
+import 'package:uni/model/entities/course_units/course_unit_classes.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_generic_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,12 +21,14 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
           textColor: color,
           iconColor: color,
           title: Text(
-            this.courseUnit.name,
+            this.courseUnit.courseName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
           ),
-          children: getClasses(color),
+          children: (courseUnit.classes.isEmpty)
+              ? [Text('Cadeira sem turmas atribuídas')]
+              : getClasses(color),
         ));
   }
 
@@ -43,7 +45,9 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
         ),
-        children: getStudents(courseClass, color),
+        children: (courseClass.students.isEmpty)
+            ? [Text('Turma sem estudantes atríbuidos')]
+            : getStudents(courseClass, color),
       ));
     });
     return classes;

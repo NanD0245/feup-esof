@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:uni/model/entities/course_unit_class.dart';
-import 'package:uni/model/entities/course_unit_classes.dart';
-import 'package:uni/model/entities/course_unit_student.dart';
-import 'package:uni/view/Widgets/course_units/course_unit_class_card.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:tuple/tuple.dart';
+import 'package:uni/model/app_state.dart';
+import 'package:uni/model/entities/course_units/course_unit_classes.dart';
+import 'package:uni/view/Widgets/request_dependent_widget_builder.dart';
+
+import '../../Widgets/course_units/course_unit_class_card.dart';
 
 class CourseUnitsClassesView extends StatefulWidget {
   @override
@@ -10,71 +13,58 @@ class CourseUnitsClassesView extends StatefulWidget {
 }
 
 class _CourseUnitsClassesViewState extends State<StatefulWidget> {
-  List<CourseUnitClasses> activeCourses = [
-    CourseUnitClasses('Laboratório de Computadores', [
-      CourseUnitClass('2LEIC01', [
-        CourseUnitStudent('Fernando Luis Santos Rego', 'up201905951',
-            'up201905951@edu.fe.up.pt'),
-        CourseUnitStudent('Bruno Mendes', 'upgay', 'upgay@edu.fe.up.pt')
-      ]),
-      CourseUnitClass('2LEIC02', [
-        CourseUnitStudent(
-            'Olá pessoa', 'up201902351', 'up201902351@edu.fe.up.pt')
-      ]),
-    ]),
-    CourseUnitClasses('Compiladores', [
-      CourseUnitClass('2LEIC01', [
-        CourseUnitStudent('Fernando Luis Santos Rego', 'up201905951',
-            'up201905951@edu.fe.up.pt'),
-        CourseUnitStudent('Bruno Mendes', 'upgay', 'upgay@edu.fe.up.pt')
-      ]),
-    ])
-  ];
-  List<CourseUnitClasses> pastCourses = [
-    CourseUnitClasses('Progamação Funcional e Lógica', [
-      CourseUnitClass('3LEIC04', [
-        CourseUnitStudent('David Preda', 'upghost', 'upghost@edu.fe.up.pt'),
-        CourseUnitStudent('Bruno Mendes', 'upgay', 'upgay@edu.fe.up.pt')
-      ]),
-      CourseUnitClass('3LEIC07', [
-        CourseUnitStudent('Fernando Luis Santos Rego', 'up201905951',
-            'up201905951@edu.fe.up.pt')
-      ]),
-    ])
-  ];
-  List<Widget> activeCourseCards = [];
-  List<Widget> pastCourseCards = [];
   @override
   Widget build(BuildContext context) {
-    activeCourses.forEach((course) {
-      activeCourseCards.add(CourseUnitClassCard(course));
-    });
-    pastCourses.forEach((course) {
-      pastCourseCards.add(CourseUnitClassCard(course));
-    });
-    return ListView(
-        children: [
-      Container(
-          padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
-          child: Text(
-            'Por concluir',
-            textScaleFactor: 0.8,
-          )),
-    ]
-          ..addAll(activeCourseCards)
-          ..addAll([
-            Container(
-                padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
-                child: Text(
-                  'Concluídas',
-                  textScaleFactor: 0.8,
-                )),
-          ])
-          ..addAll(pastCourseCards)
-          ..addAll([
-            Container(
-              padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
-            )
-          ]));
+    return StoreConnector<AppState,
+            Tuple2<List<CourseUnitClasses>, RequestStatus>>(
+        builder: (context, courseUnitsClassesData) {
+          final courseUnitsClasses = courseUnitsClassesData.item1;
+          final courseUnitsClassesStatus = courseUnitsClassesData.item2;
+          return RequestDependentWidgetBuilder(
+            context: context,
+            onNullContent:
+                Center(child: Text('Não existem turmas para apresentar')),
+            status: courseUnitsClassesStatus,
+            content: courseUnitsClasses,
+            contentChecker: courseUnitsClasses?.isNotEmpty ?? false,
+            contentGenerator: (_, BuildContext context) {
+              final List<Widget> activeCourseCards = [];
+              final List<Widget> pastCourseCards = [];
+              courseUnitsClasses.forEach((course) {
+                if (course.active) {
+                  activeCourseCards.add(CourseUnitClassCard(course));
+                } else {
+                  pastCourseCards.add(CourseUnitClassCard(course));
+                }
+              });
+              return ListView(
+                  children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
+                    child: Text(
+                      'Por concluir',
+                      textScaleFactor: 0.8,
+                    )),
+              ]
+                    ..addAll(activeCourseCards)
+                    ..addAll([
+                      Container(
+                          padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
+                          child: Text(
+                            'Concluídas',
+                            textScaleFactor: 0.8,
+                          )),
+                    ])
+                    ..addAll(pastCourseCards)
+                    ..addAll([
+                      Container(
+                        padding: EdgeInsets.fromLTRB(30, 20, 0, 5),
+                      )
+                    ]));
+            },
+          );
+        },
+        converter: (store) => Tuple2(store.state.content['ucsClasses'],
+            store.state.content['ucsClassesStatus']));
   }
 }

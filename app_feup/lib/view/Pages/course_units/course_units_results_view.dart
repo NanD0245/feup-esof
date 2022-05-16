@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:tuple/tuple.dart';
-import 'package:uni/model/entities/course_unit.dart';
+import 'package:uni/model/entities/course_units/course_unit.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_result_card.dart';
 
 import '../../../model/app_state.dart';

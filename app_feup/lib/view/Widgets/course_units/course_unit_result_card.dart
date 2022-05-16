@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uni/model/entities/course_unit.dart';
+import 'package:uni/model/entities/course_units/course_unit.dart';
 import 'package:uni/view/Widgets/course_units/course_unit_generic_card.dart';
 
 class CourseUnitResultCard extends CourseUnitGenericCard {
@@ -47,7 +47,8 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
           getTableRowInfos('Créditos:', this.courseUnit.ects.toString()),
           getTableRowInfos('Ano:', this.courseUnit.curricularYear.toString()),
           getTableRowInfos('Semestre:', this.courseUnit.semesterCode),
-          getTableRowInfos('Nota:', this.courseUnit.grade),
+          getTableRowInfos('Nota:',
+              (this.courseUnit.grade.isEmpty) ? 'N/A' : this.courseUnit.grade),
         ]);
   }
 
