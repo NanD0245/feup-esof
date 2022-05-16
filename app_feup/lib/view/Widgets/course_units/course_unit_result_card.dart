@@ -47,7 +47,8 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
           getTableRowInfos('Créditos:', this.courseUnit.ects.toString()),
           getTableRowInfos('Ano:', this.courseUnit.curricularYear.toString()),
           getTableRowInfos('Semestre:', this.courseUnit.semesterCode),
-          getTableRowInfos('Nota:', this.courseUnit.grade),
+          getTableRowInfos('Nota:',
+              (this.courseUnit.grade.isEmpty) ? 'N/A' : this.courseUnit.grade),
         ]);
   }
 
