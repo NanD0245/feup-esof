@@ -35,22 +35,33 @@ class CourseUnitsFetcher {
       final Response courseChoiceResponse =
           await NetworkRouter.getWithCookies(courseChoiceUrl, {}, session);
       final courseChoiceDocument = parse(courseChoiceResponse.body);
-      var url = courseChoiceDocument
+      final urls = courseChoiceDocument
           .querySelectorAll('a')
           .where((element) =>
               element.attributes['href'] != null &&
               element.attributes['href']
                   .contains('it_listagem.lista_turma_disciplina'))
-          .toList()[0]
-          .attributes['href'];
-      if (!url.contains('sigarra.up.pt')) {
-        url = NetworkRouter.getBaseUrl(session.faculty) + url;
+          .map((e) {
+        var url = e.attributes['href'];
+        if (!url.contains('sigarra.up.pt')) {
+          url = NetworkRouter.getBaseUrl(session.faculty) + url;
+        }
+        return url;
+      }).toList();
+
+      for (final url in urls) {
+        final Future<Response> response =
+            NetworkRouter.getWithCookies(url, {}, session);
+        final CourseUnitClasses courseUnitClasses = await response
+            .then((response) => parseCourseUnitClasses(courseUnit, response));
+        if (courseUnitsClasses.isNotEmpty &&
+            courseUnitsClasses.last.courseName ==
+                courseUnitClasses.courseName) {
+          courseUnitsClasses.last.classes.addAll(courseUnitClasses.classes);
+        } else {
+          courseUnitsClasses.add(courseUnitClasses);
+        }
       }
-      final Future<Response> response =
-          NetworkRouter.getWithCookies(url, {}, session);
-      final CourseUnitClasses courseUnitClasses = await response
-          .then((response) => parseCourseUnitClasses(courseUnit, response));
-      courseUnitsClasses.add(courseUnitClasses);
     }
     return courseUnitsClasses;
   }
