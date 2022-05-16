@@ -25,6 +25,7 @@ class _CourseUnitsMaterialsViewState extends State<StatefulWidget> {
               courseUnitsMaterialsData.item2;
           final Session session = courseUnitsMaterialsData.item3;
           return RequestDependentWidgetBuilder(
+              alwaysShowCircularProgressWhileBusy: true,
               context: context,
               status: courseUnitsMaterialsStatus,
               contentGenerator: (_, BuildContext context) {
