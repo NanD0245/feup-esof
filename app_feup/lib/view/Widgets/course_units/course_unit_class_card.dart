@@ -26,7 +26,9 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
           ),
-          children: getClasses(color),
+          children: (courseUnit.classes.isEmpty)
+              ? [Text('Cadeira sem turmas atribuídas')]
+              : getClasses(color),
         ));
   }
 
@@ -43,7 +45,9 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
         ),
-        children: getStudents(courseClass, color),
+        children: (courseClass.students.isEmpty)
+            ? [Text('Turma sem estudantes atríbuidos')]
+            : getStudents(courseClass, color),
       ));
     });
     return classes;
