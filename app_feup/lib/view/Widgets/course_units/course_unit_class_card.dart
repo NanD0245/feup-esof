@@ -46,7 +46,7 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
         ),
         children: (courseClass.students.isEmpty)
-            ? [Text('Turma sem estudantes atríbuidos')]
+            ? [Text('Turma sem estudantes atribuídos')]
             : getStudents(courseClass, color),
       ));
     });
@@ -59,7 +59,6 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
     courseUnitClass.students.forEach((student) {
       students.add(ListTile(
           dense: true,
-          //textColor: color,
           iconColor: color,
           title: Text(
             student.name,
