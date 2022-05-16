@@ -2,6 +2,7 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:uni/controller/parsers/parser_course_unit_sheet.dart';
 import 'package:uni/model/entities/course_units/course_unit_classes.dart';
+import 'package:uni/model/entities/course_units/course_unit_materials.dart';
 import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
 
 import '../../controller/networking/network_router.dart';
@@ -64,5 +65,26 @@ class CourseUnitsFetcher {
       }
     }
     return courseUnitsClasses;
+  }
+
+  List<CourseUnitMaterials> getCourseUnitsMaterials(
+      Session session, List<CourseUnit> userUcs) {
+    List<CourseUnitMaterials> activeCourses = [
+      CourseUnitMaterials(
+          'Engenharia de Software', 'https://www.google.com', true),
+      CourseUnitMaterials(
+          'Laboratório de Computadores',
+          'https://sigarra.up.pt/feup/pt/conteudos_geral.download_todos_conteudos?pct_pag_id=249640&pct_parametros=pv_ocorrencia_id=484430',
+          true),
+      CourseUnitMaterials(
+          'Inteligência Artificial', 'www.pplware.sapo.pt', true)
+    ];
+    List<CourseUnitMaterials> pastCourses = [
+      CourseUnitMaterials('Fundamentos de Segurança Informática', '', false),
+      CourseUnitMaterials(
+          'Linguagens e Tecnologias Web', 'www.amazon.com', false),
+    ];
+    activeCourses.addAll(pastCourses);
+    return activeCourses;
   }
 }

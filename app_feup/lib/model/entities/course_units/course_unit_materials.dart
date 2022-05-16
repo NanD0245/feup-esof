@@ -1,7 +1,7 @@
 class CourseUnitMaterials {
-  final String name;
+  final String courseName;
   final String zipUrl;
   final bool active;
 
-  CourseUnitMaterials(this.name, this.zipUrl, this.active);
+  CourseUnitMaterials(this.courseName, this.zipUrl, this.active);
 }

@@ -30,7 +30,7 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
           childrenPadding:
               EdgeInsets.symmetric(vertical: padding, horizontal: padding * 2),
           title: Text(
-            this.courseUnit.name,
+            this.courseUnit.courseName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
@@ -76,8 +76,9 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
       final Response response =
           await NetworkRouter.getWithCookies(courseUnit.zipUrl, {}, session);
       if (await Permission.storage.request().isGranted) {
-        final File file = File(
-            '$path/materiais_' + courseUnit.name.replaceAll(' ', '') + '.zip');
+        final File file = File('$path/materiais_' +
+            courseUnit.courseName.replaceAll(' ', '') +
+            '.zip');
         await file.writeAsBytes(response.bodyBytes);
         ToastMessage.display(context, 'Transferência concluída');
       }
