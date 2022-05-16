@@ -76,13 +76,18 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
       final Response response =
           await NetworkRouter.getWithCookies(courseUnit.zipUrl, {}, session);
       if (await Permission.storage.request().isGranted) {
-        final File file = File('$path/materiais_' +
-            courseUnit.courseName.replaceAll(' ', '') +
-            '.zip');
+        final filteredCourseName =
+            courseUnit.courseName.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+        final File file =
+            File('$path/materiais_' + filteredCourseName + '.zip');
         await file.writeAsBytes(response.bodyBytes);
         ToastMessage.display(context, 'Transferência concluída');
+      } else {
+        ToastMessage.display(context, 'Permissão não concedida! Tente de novo');
       }
     } catch (e) {
+      ToastMessage.display(context,
+          'Impossível guardar na localização escolhida. Tente de novo');
       Logger().e(e.toString());
     }
   }

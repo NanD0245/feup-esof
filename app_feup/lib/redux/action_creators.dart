@@ -352,7 +352,7 @@ ThunkAction<AppState> getCourseUnitsMaterialsFromFetcher(
     try {
       store.dispatch(SetCourseUnitMaterialsStatusAction(RequestStatus.busy));
       final List<CourseUnitMaterials> courseUnitsMaterials =
-          CourseUnitsFetcher().getCourseUnitsMaterials(
+          await CourseUnitsFetcher().getCourseUnitsMaterials(
               store.state.content['session'], store.state.content['currUcs']);
       // TO DO: Add to local db
       store.dispatch(SetCourseUnitMaterialsAction(courseUnitsMaterials));

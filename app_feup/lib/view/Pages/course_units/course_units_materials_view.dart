@@ -71,7 +71,7 @@ class _CourseUnitsMaterialsViewState extends State<StatefulWidget> {
         },
         converter: (store) => Tuple3(
             store.state.content['ucsMaterials'],
-            store.state.content['ucsMaterialsState'],
+            store.state.content['ucsMaterialsStatus'],
             store.state.content['session']));
   }
 }
