@@ -73,6 +73,7 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
         requestPermission: () async =>
             await Permission.storage.request().isGranted,
       );
+      ToastMessage.display(context, 'A transferir...');
       final Response response =
           await NetworkRouter.getWithCookies(courseUnit.zipUrl, {}, session);
       if (await Permission.storage.request().isGranted) {
@@ -86,8 +87,8 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
         ToastMessage.display(context, 'Permissão não concedida! Tente de novo');
       }
     } catch (e) {
-      ToastMessage.display(context,
-          'Impossível guardar na localização escolhida. Tente de novo');
+      ToastMessage.display(
+          context, 'Impossível transferir o ficheiro. Tente de novo');
       Logger().e(e.toString());
     }
   }
