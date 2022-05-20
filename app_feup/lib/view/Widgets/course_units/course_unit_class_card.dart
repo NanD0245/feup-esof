@@ -17,6 +17,7 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
     return Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          key: Key('${this.courseUnit.courseName} - Turmas'),
           childrenPadding: EdgeInsets.only(bottom: 12, right: 16, left: 16),
           textColor: color,
           iconColor: color,
@@ -37,6 +38,7 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
 
     courseUnit.classes.forEach((courseClass) {
       classes.add(ExpansionTile(
+        key: Key('${courseClass.name}'),
         textColor: color,
         iconColor: color,
         title: Text(
@@ -58,6 +60,7 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
 
     courseUnitClass.students.forEach((student) {
       students.add(ListTile(
+          key: Key('${student.name}'),
           dense: true,
           iconColor: color,
           title: Text(
