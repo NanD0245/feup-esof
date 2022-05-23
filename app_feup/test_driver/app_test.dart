@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_gherkin/flutter_gherkin.dart';
 import 'package:gherkin/gherkin.dart';
 
+import 'steps/class_n_exists_step.dart';
 import 'steps/enrolled_at_least_n_course_step.dart';
 import 'steps/enrolled_in_n_step.dart';
 import 'steps/open_side_drawer_step.dart';
@@ -19,7 +20,8 @@ Future<void> main() {
     ..stepDefinitions = [
       enrolledAtLeastNCourseStep(),
       openSideDrawerStep(),
-      enrolledInNStep()
+      enrolledInNStep(),
+      classNExistsStep(),
     ]
     ..customStepParameterDefinitions = []
     ..restartAppBetweenScenarios = true
