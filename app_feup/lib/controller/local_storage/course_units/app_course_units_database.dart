@@ -1,4 +1,3 @@
-import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uni/controller/local_storage/app_database.dart';
 import 'package:uni/model/entities/course_units/course_unit_student.dart';

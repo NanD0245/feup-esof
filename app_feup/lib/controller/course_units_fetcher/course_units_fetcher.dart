@@ -1,7 +1,9 @@
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
+import 'package:uni/controller/parsers/parser_course_unit_materials.dart';
 import 'package:uni/controller/parsers/parser_course_unit_sheet.dart';
 import 'package:uni/model/entities/course_units/course_unit_classes.dart';
+import 'package:uni/model/entities/course_units/course_unit_materials.dart';
 import 'package:uni/model/entities/course_units/course_unit_sheet.dart';
 
 import '../../controller/networking/network_router.dart';
@@ -12,7 +14,7 @@ import '../parsers/parser_course_unit_classes.dart';
 class CourseUnitsFetcher {
   Future<List<CourseUnitSheet>> getCourseUnitsSheets(
       Session session, List<CourseUnit> userUcs) async {
-    final List<CourseUnitSheet> courseUnitSheets = [];
+    final List<CourseUnitSheet> courseUnitsSheets = [];
     for (CourseUnit courseUnit in userUcs) {
       final String url = NetworkRouter.getBaseUrl(session.faculty) +
           'ucurr_geral.ficha_uc_view?pv_ocorrencia_id=${courseUnit.occurrId}';
@@ -20,9 +22,9 @@ class CourseUnitsFetcher {
           NetworkRouter.getWithCookies(url, {}, session);
       final CourseUnitSheet courseUnitSheet = await response
           .then((response) => parseCourseUnitSheet(courseUnit, response));
-      courseUnitSheets.add(courseUnitSheet);
+      courseUnitsSheets.add(courseUnitSheet);
     }
-    return courseUnitSheets;
+    return courseUnitsSheets;
   }
 
   Future<List<CourseUnitClasses>> getCourseUnitsClasses(
@@ -64,5 +66,21 @@ class CourseUnitsFetcher {
       }
     }
     return courseUnitsClasses;
+  }
+
+  Future<List<CourseUnitMaterials>> getCourseUnitsMaterials(
+      Session session, List<CourseUnit> userUcs) async {
+    final List<CourseUnitMaterials> courseUnitsMaterials = [];
+    for (CourseUnit courseUnit in userUcs) {
+      final String url = NetworkRouter.getBaseUrl(session.faculty) +
+          'conteudos_geral.ver?pct_pag_id=249640' +
+          '&pct_parametros=pv_ocorrencia_id=${courseUnit.occurrId}';
+      final Future<Response> response =
+          NetworkRouter.getWithCookies(url, {}, session);
+      final CourseUnitMaterials courseUnitMaterials = await response
+          .then((response) => parseCourseUnitMaterials(courseUnit, response));
+      courseUnitsMaterials.add(courseUnitMaterials);
+    }
+    return courseUnitsMaterials;
   }
 }

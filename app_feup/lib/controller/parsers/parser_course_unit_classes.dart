@@ -6,8 +6,8 @@ import 'package:uni/model/entities/course_units/course_unit_student.dart';
 import '../../model/entities/course_units/course_unit.dart';
 import '../../model/entities/course_units/course_unit_classes.dart';
 
-Future<CourseUnitClasses> parseCourseUnitClasses(
-    CourseUnit courseUnit, http.Response classesPageResponse) async {
+CourseUnitClasses parseCourseUnitClasses(
+    CourseUnit courseUnit, http.Response classesPageResponse) {
   final document = parse(classesPageResponse.body);
   final List<CourseUnitClass> classes = [];
 

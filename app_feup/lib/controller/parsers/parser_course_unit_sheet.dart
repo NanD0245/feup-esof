@@ -7,8 +7,8 @@ import 'package:uni/model/entities/course_units/course_unit_teacher.dart';
 
 import '../../model/entities/course_units/course_unit.dart';
 
-Future<CourseUnitSheet> parseCourseUnitSheet(
-    CourseUnit courseUnit, http.Response sheetPageResponse) async {
+CourseUnitSheet parseCourseUnitSheet(
+    CourseUnit courseUnit, http.Response sheetPageResponse) {
   final document = parse(sheetPageResponse.body);
 
   String goals = '';

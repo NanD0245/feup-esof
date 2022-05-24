@@ -12,10 +12,8 @@ import 'package:uni/redux/action_creators.dart';
 import 'package:uni/redux/actions.dart';
 import 'package:uni/redux/refresh_items_action.dart';
 
-import '../model/entities/course_units/course_unit.dart';
 import '../redux/action_creators.dart';
 import 'local_storage/app_shared_preferences.dart';
-import 'local_storage/course_units/app_course_units_database.dart';
 
 Future loadReloginInfo(Store<AppState> store) async {
   final Tuple2<String, String> userPersistentCredentials =
@@ -62,7 +60,8 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
       lastUpdate = Completer(),
       restaurants = Completer(),
       courseUnitsSheets = Completer(),
-      courseUnitsClasses = Completer();
+      courseUnitsClasses = Completer(),
+      courseUnitsMaterials = Completer();
 
   store.dispatch(getUserInfo(userInfo));
   store.dispatch(getUserPrintBalance(printBalance));
@@ -79,6 +78,7 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
     store.dispatch(getCourseUnitsSheetsFromFetcher(courseUnitsSheets));
     store.dispatch(getCourseUnitsClassesFromFetcher(
         courseUnitsClasses, userPersistentInfo));
+    store.dispatch(getCourseUnitsMaterialsFromFetcher(courseUnitsMaterials));
   });
 
   final allRequests = Future.wait([
@@ -92,6 +92,7 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
     restaurants.future,
     courseUnitsSheets.future,
     courseUnitsClasses.future,
+    courseUnitsMaterials.future,
   ]);
   allRequests.then((futures) {
     store.dispatch(setLastUserInfoUpdateTimestamp(lastUpdate));

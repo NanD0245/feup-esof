@@ -20,6 +20,7 @@ class _CourseUnitsResultsViewState extends State<StatefulWidget> {
           final courseUnitsResults = courseUnitsResultData.item1;
           final courseUnitsResultsStatus = courseUnitsResultData.item2;
           return RequestDependentWidgetBuilder(
+            alwaysShowCircularProgressWhileBusy: true,
             context: context,
             onNullContent:
                 Center(child: Text('Não existem resultados para apresentar')),

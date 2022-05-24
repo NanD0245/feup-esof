@@ -21,6 +21,10 @@ AppState appReducers(AppState state, dynamic action) {
     return setCourseUnitsClasses(state, action);
   } else if (action is SetCourseUnitClassesStatusAction) {
     return setCourseUnitsClassesStatus(state, action);
+  } else if (action is SetCourseUnitMaterialsAction) {
+    return setCourseUnitsMaterial(state, action);
+  } else if (action is SetCourseUnitMaterialsStatusAction) {
+    return setCourseUnitsMaterialsStatus(state, action);
   } else if (action is SetScheduleStatusAction) {
     return setScheduleStatus(state, action);
   } else if (action is SetScheduleAction) {
@@ -117,6 +121,20 @@ AppState setCourseUnitsClassesStatus(
   Logger()
       .i('setting course units classes status: ' + action.status.toString());
   return state.cloneAndUpdateValue('ucsClassesStatus', action.status);
+}
+
+AppState setCourseUnitsMaterial(
+    AppState state, SetCourseUnitMaterialsAction action) {
+  Logger().i('setting course units materials: ' +
+      action.courseUnitsMaterials.map((e) => e.courseName).toList().toString());
+  return state.cloneAndUpdateValue('ucsMaterials', action.courseUnitsMaterials);
+}
+
+AppState setCourseUnitsMaterialsStatus(
+    AppState state, SetCourseUnitMaterialsStatusAction action) {
+  Logger()
+      .i('setting course units materials status: ' + action.status.toString());
+  return state.cloneAndUpdateValue('ucsMaterialsStatus', action.status);
 }
 
 AppState setRestaurantsAction(AppState state, SetRestaurantsAction action) {

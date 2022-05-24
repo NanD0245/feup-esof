@@ -42,6 +42,7 @@ import 'package:uni/redux/actions.dart';
 
 import '../model/app_state.dart';
 import '../model/entities/bus_stop.dart';
+import '../model/entities/course_units/course_unit_materials.dart';
 import 'actions.dart';
 
 ThunkAction<AppState> reLogin(username, password, faculty, {Completer action}) {
@@ -370,6 +371,26 @@ ThunkAction<AppState> getCourseUnitsClassesFromFetcher(
     } catch (e) {
       Logger().e('Failed to get course unit classes: ${e.toString()}');
       store.dispatch(SetCourseUnitClassesStatusAction(RequestStatus.failed));
+    }
+    action.complete();
+  };
+}
+
+ThunkAction<AppState> getCourseUnitsMaterialsFromFetcher(
+    Completer<Null> action) {
+  return (Store<AppState> store) async {
+    try {
+      store.dispatch(SetCourseUnitMaterialsStatusAction(RequestStatus.busy));
+      final List<CourseUnitMaterials> courseUnitsMaterials =
+          await CourseUnitsFetcher().getCourseUnitsMaterials(
+              store.state.content['session'], store.state.content['currUcs']);
+      // TO DO: Add to local db
+      store.dispatch(SetCourseUnitMaterialsAction(courseUnitsMaterials));
+      store.dispatch(
+          SetCourseUnitMaterialsStatusAction(RequestStatus.successful));
+    } catch (e) {
+      Logger().e('Failed to get course unit materials: ${e.toString()}');
+      store.dispatch(SetCourseUnitMaterialsStatusAction(RequestStatus.failed));
     }
     action.complete();
   };
