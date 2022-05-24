@@ -21,6 +21,7 @@ class _CourseUnitsClassesViewState extends State<StatefulWidget> {
           final courseUnitsClasses = courseUnitsClassesData.item1;
           final courseUnitsClassesStatus = courseUnitsClassesData.item2;
           return RequestDependentWidgetBuilder(
+            alwaysShowCircularProgressWhileBusy: true,
             context: context,
             onNullContent:
                 Center(child: Text('Não existem turmas para apresentar')),

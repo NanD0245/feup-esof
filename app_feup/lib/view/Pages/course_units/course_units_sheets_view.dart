@@ -21,6 +21,7 @@ class _CourseUnitsSheetsViewState extends State<StatefulWidget> {
           final courseUnitsSheets = courseUnitsSheetsData.item1;
           final courseUnitsSheetsStatus = courseUnitsSheetsData.item2;
           return RequestDependentWidgetBuilder(
+            alwaysShowCircularProgressWhileBusy: true,
             context: context,
             onNullContent:
                 Center(child: Text('Não existem cadeiras para apresentar')),

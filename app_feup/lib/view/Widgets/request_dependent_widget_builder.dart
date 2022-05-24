@@ -12,6 +12,7 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
       @required this.content,
       @required this.contentChecker,
       @required this.onNullContent,
+      this.alwaysShowCircularProgressWhileBusy = false,
       this.index})
       : super(key: key);
 
@@ -20,6 +21,7 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
   final Widget Function(dynamic, BuildContext) contentGenerator;
   final content;
   final bool contentChecker;
+  final bool alwaysShowCircularProgressWhileBusy;
   final Widget onNullContent;
   final int index;
   static final AppLastUserInfoUpdateDatabase lastUpdateDatabase =
@@ -37,7 +39,8 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
                 ? contentGenerator(content, context)
                 : onNullContent;
           case RequestStatus.busy:
-            if (lastUpdateTime != null) {
+            if (!alwaysShowCircularProgressWhileBusy &&
+                lastUpdateTime != null) {
               return contentChecker
                   ? contentGenerator(content, context)
                   : onNullContent;
