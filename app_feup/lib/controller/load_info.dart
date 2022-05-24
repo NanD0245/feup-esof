@@ -106,6 +106,7 @@ void loadLocalUserInfoToState(store) async {
       await AppSharedPreferences.getPersistentUserInfo();
   if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
     store.dispatch(updateStateBasedOnLocalProfile());
+    store.dispatch(updateStateBasedOnLocalCourseUnits());
     store.dispatch(updateStateBasedOnLocalUserExams());
     store.dispatch(updateStateBasedOnLocalUserLectures());
     store.dispatch(updateStateBasedOnLocalUserBusStops());

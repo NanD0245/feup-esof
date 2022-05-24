@@ -16,6 +16,7 @@ import 'package:uni/controller/local_storage/app_refresh_times_database.dart';
 import 'package:uni/controller/local_storage/app_restaurant_database.dart';
 import 'package:uni/controller/local_storage/app_shared_preferences.dart';
 import 'package:uni/controller/local_storage/app_user_database.dart';
+import 'package:uni/controller/local_storage/course_units/app_course_units_database.dart';
 import 'package:uni/controller/networking/network_router.dart'
     show NetworkRouter;
 import 'package:uni/controller/parsers/parser_courses.dart';
@@ -119,14 +120,17 @@ ThunkAction<AppState> getUserInfo(Completer<Null> action) {
         store.dispatch(SaveProfileAction(userProfile));
         store.dispatch(SaveProfileStatusAction(RequestStatus.successful));
       });
-      final ucs =
-          NetworkRouter.getCurrentCourseUnits(store.state.content['session'])
-              .then((res) => store.dispatch(SaveUcsAction(res)));
+      final Future<List<CourseUnit>> ucs =
+          NetworkRouter.getCurrentCourseUnits(store.state.content['session']);
+      ucs.then((res) => store.dispatch(SaveCurrUcsAction(res)));
       await Future.wait([profile, ucs]);
 
       final Tuple2<String, String> userPersistentInfo =
           await AppSharedPreferences.getPersistentUserInfo();
       if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
+        final courseUnitsDb = AppCourseUnitsDatabase();
+        courseUnitsDb.saveCourseUnits(await ucs);
+
         final profileDb = AppUserDataDatabase();
         profileDb.saveUserData(userProfile);
 
@@ -179,6 +183,16 @@ ThunkAction<AppState> updateStateBasedOnLocalProfile() {
     store.dispatch(SetFeesBalanceAction(profile.feesBalance));
     store.dispatch(SetFeesLimitAction(profile.feesLimit));
     store.dispatch(SetCoursesStatesAction(coursesStates));
+  };
+}
+
+ThunkAction<AppState> updateStateBasedOnLocalCourseUnits() {
+  return (Store<AppState> store) async {
+    final courseUnitsDatabase = AppCourseUnitsDatabase();
+    final List<CourseUnit> courseUnits =
+        await courseUnitsDatabase.getCourseUnits();
+
+    store.dispatch(SaveCurrUcsAction(courseUnits));
   };
 }
 
