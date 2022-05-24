@@ -102,7 +102,7 @@ class AppCourseUnitsDatabase extends AppDatabase {
 
   Future<List<CourseUnitClasses>> getCourseUnitsClasses() async {
     final Database database = await this.getDatabase();
-    final Map<String, CourseUnitClasses> courseUnitsClasses = {};
+    final Map<int, CourseUnitClasses> courseUnitsClasses = {};
     await database.transaction((txn) async {
       final ucsClassesMap = await txn.query('uc_classes');
       for (final ucClassesMap in ucsClassesMap) {
@@ -123,7 +123,7 @@ class AppCourseUnitsDatabase extends AppDatabase {
           courseUnitsClasses[uc['occur_id']].classes.add(courseUnitClass);
         } else {
           courseUnitsClasses[uc['occur_id']] = CourseUnitClasses(
-              uc['occur_id'], [courseUnitClass], uc['result'] != 'A');
+              uc['name'], [courseUnitClass], uc['result'] != 'A');
         }
       }
     });
