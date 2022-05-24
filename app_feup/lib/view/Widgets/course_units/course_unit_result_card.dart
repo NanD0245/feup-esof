@@ -13,6 +13,7 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
     return Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          key: Key('${this.courseUnit.name} - Resultados'),
           textColor: Theme.of(context).colorScheme.secondary,
           iconColor: Theme.of(context).colorScheme.secondary,
           childrenPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
@@ -41,6 +42,7 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
 
   Widget getCourseUnitInfos(CourseUnit courseUnit) {
     return Table(
+        key: Key('${courseUnit.name} - Tabela'),
         columnWidths: {1: FractionColumnWidth(.2)},
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [
