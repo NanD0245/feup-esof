@@ -81,8 +81,9 @@ class CourseUnit {
       'type': type,
       'status': status,
       'ects_grade': ectsGrade,
-      'ects': ects,
+      'ects': ects.toInt(),
       'grade': grade,
+      'result': result,
     };
   }
 }

@@ -196,6 +196,16 @@ ThunkAction<AppState> updateStateBasedOnLocalCourseUnits() {
   };
 }
 
+ThunkAction<AppState> updateStateBasedOnLocalCourseUnitsClasses() {
+  return (Store<AppState> store) async {
+    final courseUnitsDatabase = AppCourseUnitsDatabase();
+    final List<CourseUnitClasses> courseUnitsClasses =
+        await courseUnitsDatabase.getCourseUnitsClasses();
+
+    store.dispatch(SetCourseUnitClassesAction(courseUnitsClasses));
+  };
+}
+
 ThunkAction<AppState> updateStateBasedOnLocalUserBusStops() {
   return (Store<AppState> store) async {
     final AppBusStopDatabase busStopsDb = AppBusStopDatabase();
@@ -340,14 +350,21 @@ ThunkAction<AppState> getCourseUnitsSheetsFromFetcher(Completer<Null> action) {
   };
 }
 
-ThunkAction<AppState> getCourseUnitsClassesFromFetcher(Completer<Null> action) {
+ThunkAction<AppState> getCourseUnitsClassesFromFetcher(
+    Completer<Null> action, Tuple2<String, String> userPersistentInfo) {
   return (Store<AppState> store) async {
     try {
       store.dispatch(SetCourseUnitClassesStatusAction(RequestStatus.busy));
       final List<CourseUnitClasses> courseUnitsClasses =
           await CourseUnitsFetcher().getCourseUnitsClasses(
               store.state.content['session'], store.state.content['currUcs']);
-      // TO DO: Add to local db
+
+      if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
+        final AppCourseUnitsDatabase database = AppCourseUnitsDatabase();
+        await database.saveCourseUnitsClasses(
+            store.state.content['currUcs'], courseUnitsClasses);
+      }
+
       store.dispatch(SetCourseUnitClassesAction(courseUnitsClasses));
       store
           .dispatch(SetCourseUnitClassesStatusAction(RequestStatus.successful));

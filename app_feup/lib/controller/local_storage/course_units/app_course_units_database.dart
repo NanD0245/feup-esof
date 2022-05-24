@@ -1,7 +1,11 @@
+import 'package:logger/logger.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uni/controller/local_storage/app_database.dart';
+import 'package:uni/model/entities/course_units/course_unit_student.dart';
 
 import '../../../model/entities/course_units/course_unit.dart';
+import '../../../model/entities/course_units/course_unit_class.dart';
+import '../../../model/entities/course_units/course_unit_classes.dart';
 
 class AppCourseUnitsDatabase extends AppDatabase {
   AppCourseUnitsDatabase()
@@ -11,15 +15,16 @@ class AppCourseUnitsDatabase extends AppDatabase {
             id INTEGER,
             code TEXT,
             abbreviation TEXT,
-            name TEXT NOT NULL,
-            curricular_year INT,
+            name TEXT NOT NULL UNIQUE,
+            curricular_year INTEGER,
             semester_code TEXT,
             semester_name TEXT,
             type TEXT,
             status TEXT,
             ects_grade TEXT,
-            ects TEXT,
-            grade INTEGER
+            ects INTEGER,
+            grade TEXT,
+            result TEXT
             )
         ''',
           '''CREATE TABLE uc_classes(
@@ -43,14 +48,14 @@ class AppCourseUnitsDatabase extends AppDatabase {
   Future<void> saveCourseUnits(List<CourseUnit> courseUnits) async {
     final Database database = await this.getDatabase();
     database.transaction((txn) async {
-      await deleteAll(txn);
+      await _deleteUcs(txn);
       courseUnits.forEach((restaurant) {
-        insertCourseUnit(txn, restaurant);
+        _insertCourseUnit(txn, restaurant);
       });
     });
   }
 
-  Future<void> insertCourseUnit(
+  Future<void> _insertCourseUnit(
       Transaction transaction, CourseUnit courseUnit) async {
     await transaction.insert('ucs', courseUnit.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
@@ -60,7 +65,7 @@ class AppCourseUnitsDatabase extends AppDatabase {
     final Database database = await this.getDatabase();
     final List<CourseUnit> courseUnits = [];
     await database.transaction((txn) async {
-      final ucsMap = await database.query('ucs');
+      final ucsMap = await txn.query('ucs');
       ucsMap.forEach((entry) {
         courseUnits.add(CourseUnit.fromMap(entry));
       });
@@ -68,9 +73,75 @@ class AppCourseUnitsDatabase extends AppDatabase {
     return courseUnits;
   }
 
+  Future<void> saveCourseUnitsClasses(List<CourseUnit> courseUnits,
+      List<CourseUnitClasses> courseUnitsClasses) async {
+    final Database database = await this.getDatabase();
+    database.transaction((txn) async {
+      await _deleteUcsClasses(txn);
+      courseUnitsClasses.forEach((courseUnitClasses) async {
+        final courseUnit = courseUnits.firstWhere(
+            (element) => element.name == courseUnitClasses.courseName,
+            orElse: null);
+        if (courseUnit == null) {
+          return;
+        }
+        await _insertCourseUnitClasses(txn, courseUnit, courseUnitClasses);
+      });
+    });
+  }
+
+  Future<void> _insertCourseUnitClasses(Transaction transaction,
+      CourseUnit courseUnit, CourseUnitClasses courseUnitClasses) async {
+    for (CourseUnitClass c in courseUnitClasses.classes) {
+      final int ucClassId =
+          await transaction.insert('uc_classes', c.toMap(courseUnit.occurrId));
+      for (CourseUnitStudent student in c.students) {
+        await transaction.insert('uc_students', student.toMap(ucClassId));
+      }
+    }
+  }
+
+  Future<List<CourseUnitClasses>> getCourseUnitsClasses() async {
+    final Database database = await this.getDatabase();
+    final Map<String, CourseUnitClasses> courseUnitsClasses = {};
+    await database.transaction((txn) async {
+      final ucsClassesMap = await txn.query('uc_classes');
+      for (final ucClassesMap in ucsClassesMap) {
+        final uc = (await txn.query('ucs',
+            where: 'occur_id = ?',
+            whereArgs: [ucClassesMap['uc_occur_id']]))[0];
+        final className = ucClassesMap['name'];
+        final int classId = ucClassesMap['id'];
+        final classStudents = await txn.query('uc_students',
+            where: 'uc_class_id = ?', whereArgs: [classId]);
+        final List<CourseUnitStudent> students = [];
+        for (final studentMap in classStudents) {
+          students.add(CourseUnitStudent.fromMap(studentMap));
+        }
+
+        final courseUnitClass = CourseUnitClass(className, students);
+        if (courseUnitsClasses.containsKey(uc['name'])) {
+          courseUnitsClasses[uc['name']].classes.add(courseUnitClass);
+        } else {
+          courseUnitsClasses[uc['name']] = CourseUnitClasses(
+              uc['name'], [courseUnitClass], uc['result'] != 'A');
+        }
+      }
+    });
+    return courseUnitsClasses.values.toList();
+  }
+
   Future<void> deleteAll(Transaction transaction) async {
+    await _deleteUcs(transaction);
+    await _deleteUcsClasses(transaction);
+  }
+
+  Future<void> _deleteUcs(Transaction transaction) async {
     await transaction.delete('ucs');
-    await transaction.delete('ucs_classes');
+  }
+
+  Future<void> _deleteUcsClasses(Transaction transaction) async {
+    await transaction.delete('uc_classes');
     await transaction.delete('uc_students');
   }
 }

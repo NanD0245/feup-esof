@@ -12,8 +12,10 @@ import 'package:uni/redux/action_creators.dart';
 import 'package:uni/redux/actions.dart';
 import 'package:uni/redux/refresh_items_action.dart';
 
+import '../model/entities/course_units/course_unit.dart';
 import '../redux/action_creators.dart';
 import 'local_storage/app_shared_preferences.dart';
+import 'local_storage/course_units/app_course_units_database.dart';
 
 Future loadReloginInfo(Store<AppState> store) async {
   final Tuple2<String, String> userPersistentCredentials =
@@ -75,7 +77,8 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
     store.dispatch(getUserExams(exams, ParserExams(), userPersistentInfo));
     store.dispatch(getUserSchedule(schedule, userPersistentInfo));
     store.dispatch(getCourseUnitsSheetsFromFetcher(courseUnitsSheets));
-    store.dispatch(getCourseUnitsClassesFromFetcher(courseUnitsClasses));
+    store.dispatch(getCourseUnitsClassesFromFetcher(
+        courseUnitsClasses, userPersistentInfo));
   });
 
   final allRequests = Future.wait([
@@ -107,6 +110,7 @@ void loadLocalUserInfoToState(store) async {
   if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
     store.dispatch(updateStateBasedOnLocalProfile());
     store.dispatch(updateStateBasedOnLocalCourseUnits());
+    store.dispatch(updateStateBasedOnLocalCourseUnitsClasses());
     store.dispatch(updateStateBasedOnLocalUserExams());
     store.dispatch(updateStateBasedOnLocalUserLectures());
     store.dispatch(updateStateBasedOnLocalUserBusStops());
