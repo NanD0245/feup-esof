@@ -47,7 +47,7 @@ class AppCourseUnitsDatabase extends AppDatabase {
 
   Future<void> saveCourseUnits(List<CourseUnit> courseUnits) async {
     final Database database = await this.getDatabase();
-    database.transaction((txn) async {
+    await database.transaction((txn) async {
       await _deleteUcs(txn);
       courseUnits.forEach((restaurant) {
         _insertCourseUnit(txn, restaurant);
@@ -76,7 +76,7 @@ class AppCourseUnitsDatabase extends AppDatabase {
   Future<void> saveCourseUnitsClasses(List<CourseUnit> courseUnits,
       List<CourseUnitClasses> courseUnitsClasses) async {
     final Database database = await this.getDatabase();
-    database.transaction((txn) async {
+    await database.transaction((txn) async {
       await _deleteUcsClasses(txn);
       courseUnitsClasses.forEach((courseUnitClasses) async {
         final courseUnit = courseUnits.firstWhere(
@@ -120,11 +120,11 @@ class AppCourseUnitsDatabase extends AppDatabase {
         }
 
         final courseUnitClass = CourseUnitClass(className, students);
-        if (courseUnitsClasses.containsKey(uc['name'])) {
-          courseUnitsClasses[uc['name']].classes.add(courseUnitClass);
+        if (courseUnitsClasses.containsKey(uc['occur_id'])) {
+          courseUnitsClasses[uc['occur_id']].classes.add(courseUnitClass);
         } else {
-          courseUnitsClasses[uc['name']] = CourseUnitClasses(
-              uc['name'], [courseUnitClass], uc['result'] != 'A');
+          courseUnitsClasses[uc['occur_id']] = CourseUnitClasses(
+              uc['occur_id'], [courseUnitClass], uc['result'] != 'A');
         }
       }
     });
