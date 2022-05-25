@@ -56,7 +56,7 @@ class CourseUnitsPageView extends StatelessWidget {
                                 courseUnitsClasses = Completer(),
                                 courseUnitsMaterials = Completer();
                             store.dispatch(getCourseUnitsSheetsFromFetcher(
-                                courseUnitsSheets));
+                                courseUnitsSheets, userInfo));
                             store.dispatch(getCourseUnitsClassesFromFetcher(
                                 courseUnitsClasses, userInfo));
                             store.dispatch(getCourseUnitsMaterialsFromFetcher(

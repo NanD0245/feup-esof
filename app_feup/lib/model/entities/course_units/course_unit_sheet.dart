@@ -26,4 +26,8 @@ class CourseUnitSheet {
     }
     return map;
   }
+
+  Map<String, dynamic> toMap(int ucOccurId) {
+    return {'uc_occur_id': ucOccurId, 'goals': goals, 'program': program};
+  }
 }
