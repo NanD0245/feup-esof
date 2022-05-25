@@ -4,7 +4,6 @@ import 'package:uni/model/entities/course_units/course_unit_evaluation_component
 import 'package:uni/model/entities/course_units/course_unit_teacher.dart';
 
 class CourseUnitSheet {
-  // expand upon this
   String courseName;
   String goals;
   String program;
@@ -26,5 +25,9 @@ class CourseUnitSheet {
       }
     }
     return map;
+  }
+
+  Map<String, dynamic> toMap(int ucOccurId) {
+    return {'uc_occur_id': ucOccurId, 'goals': goals, 'program': program};
   }
 }

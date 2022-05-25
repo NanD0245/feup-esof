@@ -33,7 +33,7 @@ AppState appReducers(AppState state, dynamic action) {
     return saveProfile(state, action);
   } else if (action is SaveProfileStatusAction) {
     return saveProfileStatus(state, action);
-  } else if (action is SaveUcsAction) {
+  } else if (action is SaveCurrUcsAction) {
     return saveCurrUcs(state, action);
   } else if (action is SetPrintBalanceAction) {
     return setPrintBalance(state, action);
@@ -166,7 +166,7 @@ AppState saveProfileStatus(AppState state, SaveProfileStatusAction action) {
   return state.cloneAndUpdateValue('profileStatus', action.status);
 }
 
-AppState saveCurrUcs(AppState state, SaveUcsAction action) {
+AppState saveCurrUcs(AppState state, SaveCurrUcsAction action) {
   return state.cloneAndUpdateValue('currUcs', action.ucs);
 }
 

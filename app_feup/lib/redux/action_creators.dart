@@ -16,6 +16,7 @@ import 'package:uni/controller/local_storage/app_refresh_times_database.dart';
 import 'package:uni/controller/local_storage/app_restaurant_database.dart';
 import 'package:uni/controller/local_storage/app_shared_preferences.dart';
 import 'package:uni/controller/local_storage/app_user_database.dart';
+import 'package:uni/controller/local_storage/course_units/app_course_units_database.dart';
 import 'package:uni/controller/networking/network_router.dart'
     show NetworkRouter;
 import 'package:uni/controller/parsers/parser_courses.dart';
@@ -120,14 +121,17 @@ ThunkAction<AppState> getUserInfo(Completer<Null> action) {
         store.dispatch(SaveProfileAction(userProfile));
         store.dispatch(SaveProfileStatusAction(RequestStatus.successful));
       });
-      final ucs =
-          NetworkRouter.getCurrentCourseUnits(store.state.content['session'])
-              .then((res) => store.dispatch(SaveUcsAction(res)));
+      final Future<List<CourseUnit>> ucs =
+          NetworkRouter.getCurrentCourseUnits(store.state.content['session']);
+      ucs.then((res) => store.dispatch(SaveCurrUcsAction(res)));
       await Future.wait([profile, ucs]);
 
       final Tuple2<String, String> userPersistentInfo =
           await AppSharedPreferences.getPersistentUserInfo();
       if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
+        final courseUnitsDb = AppCourseUnitsDatabase();
+        courseUnitsDb.saveCourseUnits(await ucs);
+
         final profileDb = AppUserDataDatabase();
         profileDb.saveUserData(userProfile);
 
@@ -180,6 +184,46 @@ ThunkAction<AppState> updateStateBasedOnLocalProfile() {
     store.dispatch(SetFeesBalanceAction(profile.feesBalance));
     store.dispatch(SetFeesLimitAction(profile.feesLimit));
     store.dispatch(SetCoursesStatesAction(coursesStates));
+  };
+}
+
+ThunkAction<AppState> updateStateBasedOnLocalCourseUnits() {
+  return (Store<AppState> store) async {
+    final courseUnitsDatabase = AppCourseUnitsDatabase();
+    final List<CourseUnit> courseUnits =
+        await courseUnitsDatabase.getCourseUnits();
+
+    store.dispatch(SaveCurrUcsAction(courseUnits));
+  };
+}
+
+ThunkAction<AppState> updateStateBasedOnLocalCourseUnitsClasses() {
+  return (Store<AppState> store) async {
+    final courseUnitsDatabase = AppCourseUnitsDatabase();
+    final List<CourseUnitClasses> courseUnitsClasses =
+        await courseUnitsDatabase.getCourseUnitsClasses();
+
+    store.dispatch(SetCourseUnitClassesAction(courseUnitsClasses));
+  };
+}
+
+ThunkAction<AppState> updateStateBasedOnLocalCourseUnitsSheets() {
+  return (Store<AppState> store) async {
+    final courseUnitsDatabase = AppCourseUnitsDatabase();
+    final List<CourseUnitSheet> courseUnitsSheets =
+        await courseUnitsDatabase.getCourseUnitsSheets();
+
+    store.dispatch(SetCourseUnitSheetsAction(courseUnitsSheets));
+  };
+}
+
+ThunkAction<AppState> updateStateBasedOnLocalCourseUnitsMaterials() {
+  return (Store<AppState> store) async {
+    final courseUnitsDatabase = AppCourseUnitsDatabase();
+    final List<CourseUnitMaterials> courseUnitsMaterials =
+        await courseUnitsDatabase.getCourseUnitsMaterials();
+
+    store.dispatch(SetCourseUnitMaterialsAction(courseUnitsMaterials));
   };
 }
 
@@ -298,7 +342,6 @@ ThunkAction<AppState> getRestaurantsFromFetcher(Completer<Null> action) {
       // Updates local database according to information fetched -- Restaurants
       final RestaurantDatabase db = RestaurantDatabase();
       db.saveRestaurants(restaurants);
-      db.restaurants(day: null);
       store.dispatch(SetRestaurantsAction(restaurants));
       store.dispatch(SetRestaurantsStatusAction(RequestStatus.successful));
     } catch (e) {
@@ -309,14 +352,21 @@ ThunkAction<AppState> getRestaurantsFromFetcher(Completer<Null> action) {
   };
 }
 
-ThunkAction<AppState> getCourseUnitsSheetsFromFetcher(Completer<Null> action) {
+ThunkAction<AppState> getCourseUnitsSheetsFromFetcher(
+    Completer<Null> action, Tuple2<String, String> userPersistentInfo) {
   return (Store<AppState> store) async {
     try {
       store.dispatch(SetCourseUnitSheetsStatusAction(RequestStatus.busy));
       final List<CourseUnitSheet> courseUnitsSheets = await CourseUnitsFetcher()
           .getCourseUnitsSheets(
               store.state.content['session'], store.state.content['currUcs']);
-      // TO DO: Add to local db
+
+      if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
+        final AppCourseUnitsDatabase database = AppCourseUnitsDatabase();
+        await database.saveCourseUnitsSheets(
+            store.state.content['currUcs'], courseUnitsSheets);
+      }
+
       store.dispatch(SetCourseUnitSheetsAction(courseUnitsSheets));
       store.dispatch(SetCourseUnitSheetsStatusAction(RequestStatus.successful));
     } catch (e) {
@@ -327,14 +377,21 @@ ThunkAction<AppState> getCourseUnitsSheetsFromFetcher(Completer<Null> action) {
   };
 }
 
-ThunkAction<AppState> getCourseUnitsClassesFromFetcher(Completer<Null> action) {
+ThunkAction<AppState> getCourseUnitsClassesFromFetcher(
+    Completer<Null> action, Tuple2<String, String> userPersistentInfo) {
   return (Store<AppState> store) async {
     try {
       store.dispatch(SetCourseUnitClassesStatusAction(RequestStatus.busy));
       final List<CourseUnitClasses> courseUnitsClasses =
           await CourseUnitsFetcher().getCourseUnitsClasses(
               store.state.content['session'], store.state.content['currUcs']);
-      // TO DO: Add to local db
+
+      if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
+        final AppCourseUnitsDatabase database = AppCourseUnitsDatabase();
+        await database.saveCourseUnitsClasses(
+            store.state.content['currUcs'], courseUnitsClasses);
+      }
+
       store.dispatch(SetCourseUnitClassesAction(courseUnitsClasses));
       store
           .dispatch(SetCourseUnitClassesStatusAction(RequestStatus.successful));
@@ -347,14 +404,20 @@ ThunkAction<AppState> getCourseUnitsClassesFromFetcher(Completer<Null> action) {
 }
 
 ThunkAction<AppState> getCourseUnitsMaterialsFromFetcher(
-    Completer<Null> action) {
+    Completer<Null> action, Tuple2<String, String> userPersistentInfo) {
   return (Store<AppState> store) async {
     try {
       store.dispatch(SetCourseUnitMaterialsStatusAction(RequestStatus.busy));
       final List<CourseUnitMaterials> courseUnitsMaterials =
           await CourseUnitsFetcher().getCourseUnitsMaterials(
               store.state.content['session'], store.state.content['currUcs']);
-      // TO DO: Add to local db
+
+      if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
+        final AppCourseUnitsDatabase database = AppCourseUnitsDatabase();
+        await database.saveCourseUnitsMaterials(
+            store.state.content['currUcs'], courseUnitsMaterials);
+      }
+
       store.dispatch(SetCourseUnitMaterialsAction(courseUnitsMaterials));
       store.dispatch(
           SetCourseUnitMaterialsStatusAction(RequestStatus.successful));

@@ -10,6 +10,7 @@ const Color _mildBlack = Color.fromARGB(255, 0x30, 0x30, 0x30);
 
 ThemeData applicationLightTheme = ThemeData(
     brightness: Brightness.light,
+    indicatorColor: _lightRed,
     primaryColor: Colors.white,
     dividerColor: _lightGrey,
     hintColor: _lightGrey,

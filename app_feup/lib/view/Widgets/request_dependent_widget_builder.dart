@@ -45,17 +45,24 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
                   ? contentGenerator(content, context)
                   : onNullContent;
             }
+            return Center(child: CircularProgressIndicator());
+          case RequestStatus.failed:
             return contentChecker
                 ? contentGenerator(content, context)
-                : Center(child: CircularProgressIndicator());
-          case RequestStatus.failed:
+                : Container(
+                    padding: EdgeInsets.all(8),
+                    child: Center(
+                        child: Text(
+                            '''Erro de ligação. Por favor, tente de novo''',
+                            style: Theme.of(context).textTheme.headline4)));
           default:
             return contentChecker
                 ? contentGenerator(content, context)
-                : Center(
-                    child: Text(
-                        '''Erro de comunicação. Por favor verifica a tua ligação à internet.''',
-                        style: Theme.of(context).textTheme.headline4));
+                : Container(
+                    padding: EdgeInsets.all(8),
+                    child: Center(
+                        child: Text('''Sem dados. Atualize a página''',
+                            style: Theme.of(context).textTheme.headline4)));
         }
       },
     );

@@ -98,9 +98,9 @@ class SaveProfileStatusAction {
   SaveProfileStatusAction(this.status);
 }
 
-class SaveUcsAction {
+class SaveCurrUcsAction {
   List<CourseUnit> ucs;
-  SaveUcsAction(this.ucs);
+  SaveCurrUcsAction(this.ucs);
 }
 
 class SetPrintBalanceAction {
