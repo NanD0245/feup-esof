@@ -76,7 +76,7 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
       ToastMessage.display(context, 'A transferir...');
       final Response response =
           await NetworkRouter.getWithCookies(courseUnit.zipUrl, {}, session);
-      if (await Permission.storage.request().isGranted) {
+      if (await Permission.manageExternalStorage.request().isGranted) {
         final filteredCourseName =
             courseUnit.courseName.replaceAll(RegExp('[^A-Za-z0-9]'), '');
         final File file =

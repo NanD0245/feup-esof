@@ -93,7 +93,8 @@ Future loadRemoteUserInfoToState(Store<AppState> store,
       store.dispatch(getCourseUnitsSheetsFromFetcher(courseUnitsSheets));
       store.dispatch(getCourseUnitsClassesFromFetcher(
           courseUnitsClasses, userPersistentInfo));
-      store.dispatch(getCourseUnitsMaterialsFromFetcher(courseUnitsMaterials));
+      store.dispatch(getCourseUnitsMaterialsFromFetcher(
+          courseUnitsMaterials, userPersistentInfo));
     }
   });
 
@@ -132,6 +133,7 @@ void loadLocalUserInfoToState(store) async {
     store.dispatch(updateStateBasedOnLocalProfile());
     store.dispatch(updateStateBasedOnLocalCourseUnits());
     store.dispatch(updateStateBasedOnLocalCourseUnitsClasses());
+    store.dispatch(updateStateBasedOnLocalCourseUnitsMaterials());
     store.dispatch(updateStateBasedOnLocalUserExams());
     store.dispatch(updateStateBasedOnLocalUserLectures());
     store.dispatch(updateStateBasedOnLocalUserBusStops());

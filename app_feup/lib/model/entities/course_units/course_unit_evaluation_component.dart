@@ -1,5 +1,4 @@
 class CourseUnitEvaluationComponent {
-  // expand upon this
   String designation;
   String weight;
 
