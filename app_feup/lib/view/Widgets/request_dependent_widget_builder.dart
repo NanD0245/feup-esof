@@ -47,7 +47,6 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
             }
             return Center(child: CircularProgressIndicator());
           case RequestStatus.failed:
-          default:
             return contentChecker
                 ? contentGenerator(content, context)
                 : Container(
@@ -55,6 +54,14 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
                     child: Center(
                         child: Text(
                             '''Erro de ligação. Por favor, tente de novo''',
+                            style: Theme.of(context).textTheme.headline4)));
+          default:
+            return contentChecker
+                ? contentGenerator(content, context)
+                : Container(
+                    padding: EdgeInsets.all(8),
+                    child: Center(
+                        child: Text('''Sem dados. Atualize a página''',
                             style: Theme.of(context).textTheme.headline4)));
         }
       },
