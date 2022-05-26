@@ -31,6 +31,7 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
               EdgeInsets.symmetric(vertical: padding, horizontal: padding * 2),
           title: Text(
             this.courseUnit.courseName,
+            key: Key('${this.courseUnit.courseName} - Materiais'),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
@@ -40,6 +41,7 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
                 ? ListTile(
                     title: Text(
                     'Sem material disponível',
+                    key: Key('${this.courseUnit.courseName} - Sem Material'),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                   ))
@@ -47,6 +49,8 @@ class CourseUnitMaterialCard extends CourseUnitGenericCard {
                     dense: true,
                     title: Text(
                       'Transferir ficheiro ZIP',
+                      key: Key('${this.courseUnit.courseName}' +
+                          ' - Transferir Material'),
                       style:
                           TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                     ),
