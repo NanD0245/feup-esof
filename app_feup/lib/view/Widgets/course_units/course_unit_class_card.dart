@@ -59,9 +59,10 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
   List<Widget> getStudents(CourseUnitClass courseUnitClass, Color color,
       String fullClassName) {
     final List<Widget> students = [];
+    var counter = 1;
     courseUnitClass.students.forEach((student) {
       students.add(ListTile(
-          key: Key('${fullClassName} - ${student.name}'),
+          key: Key('${fullClassName} - Student ${counter}'),
           dense: true,
           iconColor: color,
           title: Text(
@@ -87,6 +88,7 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
               }
             },
           )));
+      counter++;
     });
     return students;
   }
