@@ -7,6 +7,7 @@ Feature: Accessing Course Results
     And I tap the "Resultados" button
     And I am enrolled in at least 1 course
     And I am enrolled in "Engenharia de Software"
+    And I pause for 2 seconds
     When I tap the "Engenharia de Software - Resultados" text
     Then I expect the text "Engenharia de Software - Tabela" to be present within 3 seconds
 
@@ -16,5 +17,6 @@ Feature: Accessing Course Results
     And I tap the "Resultados" button
     And I am enrolled in at least 1 course
     And I am enrolled in "Fundamentos de Segurança Informática"
+    And I pause for 2 seconds
     When I tap the "Fundamentos de Segurança Informática - Resultados" text
     Then I expect the text "Fundamentos de Segurança Informática - Tabela" to be present within 3 seconds
