@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:html/parser.dart';
 import 'package:uni/controller/middleware.dart';
 import 'package:uni/controller/networking/network_router.dart';
 import 'package:uni/controller/parsers/parser_course_unit_classes.dart';
@@ -137,13 +138,16 @@ void main() {
             + compCourseUnit.name)));
         await tester.pumpAndSettle();
 
-        for (CourseUnitStudent student in courseUnitClass.students) {
+        var counter = 1;
+        for (CourseUnitStudent _ in courseUnitClass.students) {
           await tester.scrollUntilVisible(find.byKey(Key(courseUnitClass.name
-              + ' - ' + compCourseUnit.name + ' - ' + student.name)), 500);
+              + ' - ' + compCourseUnit.name + ' - Student ${counter}')), 500);
           await tester.pumpAndSettle();
 
           expect(find.byKey(Key(courseUnitClass.name + ' - '
-              + compCourseUnit.name + ' - ' + student.name)), findsOneWidget);
+              + compCourseUnit.name + ' - Student ${counter}')),
+              findsOneWidget);
+          counter++;
         }
       }
     });
