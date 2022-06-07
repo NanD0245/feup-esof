@@ -21,6 +21,10 @@ AppState appReducers(AppState state, dynamic action) {
     return setCourseUnitsClasses(state, action);
   } else if (action is SetCourseUnitClassesStatusAction) {
     return setCourseUnitsClassesStatus(state, action);
+  } else if (action is SetCourseUnitMaterialsAction) {
+    return setCourseUnitsMaterial(state, action);
+  } else if (action is SetCourseUnitMaterialsStatusAction) {
+    return setCourseUnitsMaterialsStatus(state, action);
   } else if (action is SetScheduleStatusAction) {
     return setScheduleStatus(state, action);
   } else if (action is SetScheduleAction) {
@@ -29,7 +33,7 @@ AppState appReducers(AppState state, dynamic action) {
     return saveProfile(state, action);
   } else if (action is SaveProfileStatusAction) {
     return saveProfileStatus(state, action);
-  } else if (action is SaveUcsAction) {
+  } else if (action is SaveCurrUcsAction) {
     return saveCurrUcs(state, action);
   } else if (action is SetPrintBalanceAction) {
     return setPrintBalance(state, action);
@@ -119,6 +123,20 @@ AppState setCourseUnitsClassesStatus(
   return state.cloneAndUpdateValue('ucsClassesStatus', action.status);
 }
 
+AppState setCourseUnitsMaterial(
+    AppState state, SetCourseUnitMaterialsAction action) {
+  Logger().i('setting course units materials: ' +
+      action.courseUnitsMaterials.map((e) => e.courseName).toList().toString());
+  return state.cloneAndUpdateValue('ucsMaterials', action.courseUnitsMaterials);
+}
+
+AppState setCourseUnitsMaterialsStatus(
+    AppState state, SetCourseUnitMaterialsStatusAction action) {
+  Logger()
+      .i('setting course units materials status: ' + action.status.toString());
+  return state.cloneAndUpdateValue('ucsMaterialsStatus', action.status);
+}
+
 AppState setRestaurantsAction(AppState state, SetRestaurantsAction action) {
   Logger().i('setting restaurants: ' + action.restaurants.length.toString());
   return state.cloneAndUpdateValue('restaurants', action.restaurants);
@@ -148,7 +166,7 @@ AppState saveProfileStatus(AppState state, SaveProfileStatusAction action) {
   return state.cloneAndUpdateValue('profileStatus', action.status);
 }
 
-AppState saveCurrUcs(AppState state, SaveUcsAction action) {
+AppState saveCurrUcs(AppState state, SaveCurrUcsAction action) {
   return state.cloneAndUpdateValue('currUcs', action.ucs);
 }
 

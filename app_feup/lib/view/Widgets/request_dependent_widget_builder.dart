@@ -12,6 +12,7 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
       @required this.content,
       @required this.contentChecker,
       @required this.onNullContent,
+      this.alwaysShowCircularProgressWhileBusy = false,
       this.index})
       : super(key: key);
 
@@ -20,6 +21,7 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
   final Widget Function(dynamic, BuildContext) contentGenerator;
   final content;
   final bool contentChecker;
+  final bool alwaysShowCircularProgressWhileBusy;
   final Widget onNullContent;
   final int index;
   static final AppLastUserInfoUpdateDatabase lastUpdateDatabase =
@@ -37,22 +39,30 @@ class RequestDependentWidgetBuilder extends StatelessWidget {
                 ? contentGenerator(content, context)
                 : onNullContent;
           case RequestStatus.busy:
-            if (lastUpdateTime != null) {
+            if (!alwaysShowCircularProgressWhileBusy &&
+                lastUpdateTime != null) {
               return contentChecker
                   ? contentGenerator(content, context)
                   : onNullContent;
             }
+            return Center(child: CircularProgressIndicator());
+          case RequestStatus.failed:
             return contentChecker
                 ? contentGenerator(content, context)
-                : Center(child: CircularProgressIndicator());
-          case RequestStatus.failed:
+                : Container(
+                    padding: EdgeInsets.all(8),
+                    child: Center(
+                        child: Text(
+                            '''Erro de ligação. Por favor, tente de novo''',
+                            style: Theme.of(context).textTheme.headline4)));
           default:
             return contentChecker
                 ? contentGenerator(content, context)
-                : Center(
-                    child: Text(
-                        '''Erro de comunicação. Por favor verifica a tua ligação à internet.''',
-                        style: Theme.of(context).textTheme.headline4));
+                : Container(
+                    padding: EdgeInsets.all(8),
+                    child: Center(
+                        child: Text('''Sem dados. Atualize a página''',
+                            style: Theme.of(context).textTheme.headline4)));
         }
       },
     );

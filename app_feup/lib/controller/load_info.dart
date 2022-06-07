@@ -13,6 +13,7 @@ import 'package:uni/redux/actions.dart';
 import 'package:uni/redux/refresh_items_action.dart';
 
 import '../redux/action_creators.dart';
+import 'local_storage/app_last_user_info_update_database.dart';
 import 'local_storage/app_shared_preferences.dart';
 
 Future loadReloginInfo(Store<AppState> store) async {
@@ -42,13 +43,25 @@ Future loadUserInfoToState(store) async {
   }
 }
 
-Future loadRemoteUserInfoToState(Store<AppState> store) async {
+Future loadRemoteUserInfoToState(Store<AppState> store,
+    {int daysBeforeFetchingHeavyDataAutomatically = 7}) async {
   if (store.state.content['session'] == null) {
     return null;
   } else if (!store.state.content['session'].authenticated &&
       store.state.content['session'].persistentSession) {
     await loadReloginInfo(store);
   }
+
+  final AppLastUserInfoUpdateDatabase lastUpdateDatabase =
+      AppLastUserInfoUpdateDatabase();
+  final lastUpdateTimestamp =
+      await lastUpdateDatabase.getLastUserInfoUpdateTime();
+  final daysSinceLastUpdate = lastUpdateTimestamp != null
+      ? DateTime.now().difference(lastUpdateTimestamp).inDays
+      : 9999;
+  final bool skipHeavyUpdates =
+      store.state.content['session'].persistentSession &&
+          daysSinceLastUpdate < daysBeforeFetchingHeavyDataAutomatically;
 
   final Completer<Null> userInfo = Completer(),
       exams = Completer(),
@@ -60,7 +73,8 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
       lastUpdate = Completer(),
       restaurants = Completer(),
       courseUnitsSheets = Completer(),
-      courseUnitsClasses = Completer();
+      courseUnitsClasses = Completer(),
+      courseUnitsMaterials = Completer();
 
   store.dispatch(getUserInfo(userInfo));
   store.dispatch(getUserPrintBalance(printBalance));
@@ -74,11 +88,18 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
   userInfo.future.then((value) {
     store.dispatch(getUserExams(exams, ParserExams(), userPersistentInfo));
     store.dispatch(getUserSchedule(schedule, userPersistentInfo));
-    store.dispatch(getCourseUnitsSheetsFromFetcher(courseUnitsSheets));
-    store.dispatch(getCourseUnitsClassesFromFetcher(courseUnitsClasses));
+
+    if (!skipHeavyUpdates) {
+      store.dispatch(getCourseUnitsSheetsFromFetcher(
+          courseUnitsSheets, userPersistentInfo));
+      store.dispatch(getCourseUnitsClassesFromFetcher(
+          courseUnitsClasses, userPersistentInfo));
+      store.dispatch(getCourseUnitsMaterialsFromFetcher(
+          courseUnitsMaterials, userPersistentInfo));
+    }
   });
 
-  final allRequests = Future.wait([
+  var allRequests = [
     exams.future,
     schedule.future,
     printBalance.future,
@@ -87,10 +108,15 @@ Future loadRemoteUserInfoToState(Store<AppState> store) async {
     userInfo.future,
     trips.future,
     restaurants.future,
-    courseUnitsSheets.future,
-    courseUnitsClasses.future,
-  ]);
-  allRequests.then((futures) {
+  ];
+  if (!skipHeavyUpdates) {
+    allRequests += [
+      courseUnitsSheets.future,
+      courseUnitsClasses.future,
+      courseUnitsMaterials.future,
+    ];
+  }
+  Future.wait(allRequests).then((futures) {
     store.dispatch(setLastUserInfoUpdateTimestamp(lastUpdate));
   });
   return lastUpdate.future;
@@ -106,6 +132,10 @@ void loadLocalUserInfoToState(store) async {
       await AppSharedPreferences.getPersistentUserInfo();
   if (userPersistentInfo.item1 != '' && userPersistentInfo.item2 != '') {
     store.dispatch(updateStateBasedOnLocalProfile());
+    store.dispatch(updateStateBasedOnLocalCourseUnits());
+    store.dispatch(updateStateBasedOnLocalCourseUnitsClasses());
+    store.dispatch(updateStateBasedOnLocalCourseUnitsMaterials());
+    store.dispatch(updateStateBasedOnLocalCourseUnitsSheets());
     store.dispatch(updateStateBasedOnLocalUserExams());
     store.dispatch(updateStateBasedOnLocalUserLectures());
     store.dispatch(updateStateBasedOnLocalUserBusStops());
