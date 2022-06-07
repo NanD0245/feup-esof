@@ -10,4 +10,4 @@ Feature: Accessing Course Attendants
     And I tap the "Engenharia de Software - Turmas" text
     And the class "2LEIC01 - Engenharia de Software" exists
     When I tap the "2LEIC01 - Engenharia de Software" text
-    Then I expect the text "2LEIC01 - Engenharia de Software - Alexandre Guimaraes Gomes Correia" to be present within 3 seconds
+    Then I expect the text "2LEIC01 - Engenharia de Software - Student 1" to be present within 3 seconds
