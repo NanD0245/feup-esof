@@ -12,7 +12,7 @@ import 'steps/open_side_drawer_step.dart';
 
 Future<void> main() {
   final config = FlutterTestConfiguration()
-    ..features = [RegExp('test_driver/features/materials.feature')]
+    ..features = [RegExp('test_driver/features/*.*.feature')]
     ..reporters = [
       ProgressReporter(),
       TestRunSummaryReporter(),
