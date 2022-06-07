@@ -16,5 +16,7 @@ Feature: Accessing Course Results
     And I tap the "Resultados" button
     And I am enrolled in at least 1 course
     And I am enrolled in "Fundamentos de Segurança Informática"
+    And I wait until the "Fundamentos de Segurança Informática - Resultados" is present
+    And I pause for 2 seconds
     When I tap the "Fundamentos de Segurança Informática - Resultados" text
     Then I expect the text "Fundamentos de Segurança Informática - Nota" to be present within 3 seconds
