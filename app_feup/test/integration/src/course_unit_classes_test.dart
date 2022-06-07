@@ -90,6 +90,11 @@ void main() {
       expect(find.byKey(Key(compCourseUnit.name + ' - Turmas')),
           findsOneWidget);
 
+      for (CourseUnitClass courseUnitClass in ucsClasses.classes) {
+        expect(find.byKey(Key(courseUnitClass.name + ' - '
+            + compCourseUnit.name)), findsNothing);
+      }
+
       await tester.tap(find.byKey(Key(compCourseUnit.name + ' - Turmas')));
       await tester.pumpAndSettle();
 
@@ -132,12 +137,20 @@ void main() {
         expect(find.byKey(Key(courseUnitClass.name + ' - '
             + compCourseUnit.name)), findsOneWidget);
 
+        var counter = 1;
+        for (CourseUnitStudent _ in courseUnitClass.students) {
+          expect(find.byKey(Key(courseUnitClass.name + ' - '
+              + compCourseUnit.name + ' - Student ${counter}')),
+              findsNothing);
+          counter++;
+        }
+
         await tester.pumpAndSettle();
         await tester.tap(find.byKey(Key(courseUnitClass.name + ' - '
             + compCourseUnit.name)));
         await tester.pumpAndSettle();
 
-        var counter = 1;
+        counter = 1;
         for (CourseUnitStudent _ in courseUnitClass.students) {
           await tester.scrollUntilVisible(find.byKey(Key(courseUnitClass.name
               + ' - ' + compCourseUnit.name + ' - Student ${counter}')), 500);
