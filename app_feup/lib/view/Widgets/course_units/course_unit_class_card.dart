@@ -29,16 +29,16 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
           ),
           children: (courseUnit.classes.isEmpty)
               ? [Text('Cadeira sem turmas atribuídas')]
-              : getClasses(color),
+              : getClasses(color, this.courseUnit.courseName),
         ));
   }
 
-  List<Widget> getClasses(Color color) {
+  List<Widget> getClasses(Color color, String courseName) {
     final List<Widget> classes = [];
 
     courseUnit.classes.forEach((courseClass) {
       classes.add(ExpansionTile(
-        key: Key('${courseClass.name}'),
+        key: Key('${courseClass.name} - ${courseName}'),
         textColor: color,
         iconColor: color,
         title: Text(
@@ -49,18 +49,20 @@ class CourseUnitClassCard extends CourseUnitGenericCard {
         ),
         children: (courseClass.students.isEmpty)
             ? [Text('Turma sem estudantes atribuídos')]
-            : getStudents(courseClass, color),
+            : getStudents(courseClass, color, '${courseClass.name} - '
+            '${courseName}'),
       ));
     });
     return classes;
   }
 
-  List<Widget> getStudents(CourseUnitClass courseUnitClass, Color color) {
+  List<Widget> getStudents(CourseUnitClass courseUnitClass, Color color,
+      String fullClassName) {
     final List<Widget> students = [];
-    int counter = 1;
+    var counter = 1;
     courseUnitClass.students.forEach((student) {
       students.add(ListTile(
-          key: Key('${courseUnitClass.name} - Student ${counter} Name'),
+          key: Key('${fullClassName} - Student ${counter}'),
           dense: true,
           iconColor: color,
           title: Text(

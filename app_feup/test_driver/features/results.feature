@@ -7,6 +7,7 @@ Feature: Accessing Course Results
     And I tap the "Resultados" button
     And I am enrolled in at least 1 course
     And I am enrolled in "Engenharia de Software"
+    And I pause for 2 seconds
     When I tap the "Engenharia de Software - Resultados" text
     Then I expect the text "Engenharia de Software - Nota: N/A" to be present within 3 seconds
 

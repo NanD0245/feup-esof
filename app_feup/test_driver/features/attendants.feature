@@ -10,6 +10,6 @@ Feature: Accessing Course Attendants
     And I wait until the "Engenharia de Software - Turmas" is present
     And I pause for 2 seconds
     And I tap the "Engenharia de Software - Turmas" text
-    And the class "2LEIC01" exists
-    When I tap the "2LEIC01" text
-    Then I expect the text "2LEIC01 - Student 1 Name" to be present within 3 seconds
+    And the class "2LEIC01 - Engenharia de Software" exists
+    When I tap the "2LEIC01 - Engenharia de Software" text
+    Then I expect the text "2LEIC01 - Engenharia de Software - Student 1" to be present within 3 seconds
