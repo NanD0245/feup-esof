@@ -7,6 +7,7 @@ Feature: Accessing Course Attendants
     And I tap the "Turmas" button
     And I am enrolled in at least 1 course
     And I am enrolled in "Engenharia de Software"
+    And I wait until the "Engenharia de Software - Turmas" is present
     And I pause for 2 seconds
     And I tap the "Engenharia de Software - Turmas" text
     And the class "2LEIC01 - Engenharia de Software" exists

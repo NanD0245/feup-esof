@@ -13,7 +13,6 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
     return Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          key: Key('${this.courseUnit.name} - Resultados'),
           textColor: Theme.of(context).colorScheme.secondary,
           iconColor: Theme.of(context).colorScheme.secondary,
           childrenPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
@@ -22,6 +21,7 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
             contentPadding: EdgeInsets.zero,
             title: Text(
               this.courseUnit.name,
+              key: Key('${this.courseUnit.name} - Resultados'),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
@@ -68,6 +68,11 @@ class CourseUnitResultCard extends CourseUnitGenericCard {
       Container(
         child: Text(
           value,
+          key: value == 'N/A'
+              ? Key('${this.courseUnit.name} - ${info} N/A')
+              : Key('${this.courseUnit.name}' +
+                  ' - ' +
+                  '${info.substring(0, info.length - 1)}'),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.right,

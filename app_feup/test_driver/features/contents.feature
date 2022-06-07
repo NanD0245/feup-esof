@@ -7,6 +7,7 @@ Feature: Accessing Course Information
     And I tap the "Fichas" button
     And I am enrolled in at least 1 course
     And I am enrolled in "Engenharia de Software"
+    And I wait until the "Engenharia de Software" is present
     And I pause for 2 seconds
     And I tap the "Engenharia de Software" text
     When I tap the "Engenharia de Software - Objetivos" text
@@ -18,6 +19,7 @@ Feature: Accessing Course Information
     And I tap the "Fichas" button
     And I am enrolled in at least 1 course
     And I am enrolled in "Compiladores"
+    And I wait until the "Compiladores" is present
     And I pause for 2 seconds
     And I tap the "Compiladores" text
     When I tap the "Compiladores - Programa" text
@@ -29,6 +31,7 @@ Feature: Accessing Course Information
     And I tap the "Fichas" button
     And I am enrolled in at least 1 course
     And I am enrolled in "Linguagens e Tecnologias Web"
+    And I wait until the "Linguagens e Tecnologias Web" is present
     And I pause for 2 seconds
     And I tap the "Linguagens e Tecnologias Web" text
     When I tap the "Linguagens e Tecnologias Web - Avaliacao" text
